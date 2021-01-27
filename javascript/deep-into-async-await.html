@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Javascript async/await 原理 &amp; 实现 | 灼灼前端</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    
+    <meta name="description" content="移动端App开发网页:Flutter 原生跨端开发、Flutter 集成 Android & iOS 混合开发，丝滑高帧的用户体验。小程序开发:JS/TS、Vue、React、Uni-app 多端开发，小游戏、Three.js 3D、车联网地图应用。三方技术顾问:项目报价、合同、风险，项目管理、跟进与协调、验收；系统运维、压力测试。">
+    <meta name="baidu-site-verification" content="code-GLMGFYoFh6">
+    
+    <link rel="preload" href="/assets/css/0.styles.7659f3c6.css" as="style"><link rel="preload" href="/assets/js/app.0ba7f43e.js" as="script"><link rel="preload" href="/assets/js/8.8fe45a55.js" as="script"><link rel="preload" href="/assets/js/1.2d515849.js" as="script"><link rel="preload" href="/assets/js/26.83e2cc3e.js" as="script"><link rel="prefetch" href="/assets/js/10.70ee330d.js"><link rel="prefetch" href="/assets/js/11.9a517545.js"><link rel="prefetch" href="/assets/js/12.b3d78d9c.js"><link rel="prefetch" href="/assets/js/13.19acdff0.js"><link rel="prefetch" href="/assets/js/14.39ceab07.js"><link rel="prefetch" href="/assets/js/15.af69e1fe.js"><link rel="prefetch" href="/assets/js/16.d20572e3.js"><link rel="prefetch" href="/assets/js/17.1e25eef3.js"><link rel="prefetch" href="/assets/js/18.5c1cd5e9.js"><link rel="prefetch" href="/assets/js/19.fa6002d0.js"><link rel="prefetch" href="/assets/js/20.f9b868f4.js"><link rel="prefetch" href="/assets/js/21.fc723abd.js"><link rel="prefetch" href="/assets/js/22.e721e36b.js"><link rel="prefetch" href="/assets/js/23.70157ced.js"><link rel="prefetch" href="/assets/js/24.bb0911e9.js"><link rel="prefetch" href="/assets/js/25.a6430ad1.js"><link rel="prefetch" href="/assets/js/27.6058922f.js"><link rel="prefetch" href="/assets/js/28.77e7e8f0.js"><link rel="prefetch" href="/assets/js/29.b7c2dcc4.js"><link rel="prefetch" href="/assets/js/3.5eef70fb.js"><link rel="prefetch" href="/assets/js/30.1b0ecbdc.js"><link rel="prefetch" href="/assets/js/31.19b7e0c5.js"><link rel="prefetch" href="/assets/js/32.6eee722d.js"><link rel="prefetch" href="/assets/js/33.58e00e54.js"><link rel="prefetch" href="/assets/js/34.746f015b.js"><link rel="prefetch" href="/assets/js/35.8f20e914.js"><link rel="prefetch" href="/assets/js/36.70533f68.js"><link rel="prefetch" href="/assets/js/37.3aa121fc.js"><link rel="prefetch" href="/assets/js/38.cd127ab8.js"><link rel="prefetch" href="/assets/js/39.ca650a41.js"><link rel="prefetch" href="/assets/js/4.a8aeca64.js"><link rel="prefetch" href="/assets/js/40.0c650fd3.js"><link rel="prefetch" href="/assets/js/41.0ea1abd2.js"><link rel="prefetch" href="/assets/js/42.9ab2e744.js"><link rel="prefetch" href="/assets/js/43.75e6f56c.js"><link rel="prefetch" href="/assets/js/44.526194c2.js"><link rel="prefetch" href="/assets/js/5.9ccab7e1.js"><link rel="prefetch" href="/assets/js/6.fe151a09.js"><link rel="prefetch" href="/assets/js/7.4294dc96.js"><link rel="prefetch" href="/assets/js/9.a08196e9.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7659f3c6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div data-v-623b3d5a><div class="theme-container no-sidebar" data-v-0c77f194 data-v-623b3d5a><header class="navbar" data-v-0c77f194><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="灼灼前端" class="logo"> <span class="site-name can-hide">灼灼前端</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/categories/" class="nav-link">
+  博客
+</a></div> <!----></nav></div></header> <div class="main-layout" data-v-0c77f194 data-v-623b3d5a><div class="left-part" data-v-0c77f194 data-v-623b3d5a></div> <div class="right-part" data-v-0c77f194 data-v-623b3d5a><main class="container px-2 md:px-10 lg:pl-20 mx-auto " data-v-7dd611ab data-v-623b3d5a> <div class="text-center pt-4" data-v-7dd611ab><div class="text-2xl md:text-3xl font-light " data-v-7dd611ab>Javascript async/await 原理 &amp; 实现</div> <div class="flex justify-center text-sm text-gray-400 flex-wrap mt-6" data-v-7dd611ab><div data-v-7dd611ab>
+        分类于
+        <span class="pr-2" data-v-7dd611ab><a href="/categories/javascript/" class="underline" data-v-7dd611ab>Javascript</a></span></div> <div class="ml-2" data-v-7dd611ab>
+        发表于
+        <span class="text-gray-600 border-b border-dashed border-gray-400 cursor-not-allowed" data-v-7dd611ab>2018-03-01</span></div> <div class="ml-2" data-v-7dd611ab>
+        作者:
+        <span class="text-gray-600 border-b border-dashed border-gray-400 cursor-not-allowed" data-v-7dd611ab>灼灼团队</span></div> <div class="ml-3" data-v-7dd611ab>
+        本文字数:
+        <span class="text-gray-500" data-v-7dd611ab>
+          1763
+        </span></div> <div class="ml-3" data-v-7dd611ab>
+        阅读时长 ≈
+        <span data-v-7dd611ab> 5.9 分钟 </span></div></div></div> <div class="mt-10" data-v-7dd611ab><div class="content content__default" data-v-7dd611ab><p>ES7 在语法层面上支持了 <code>async/await</code> 关键字，我们将在代码层面上模拟实现 <code>async/await</code> 来理解它的工作原理。</p> <p>本文旨在说明其工作原理，你应该具备以下前置知识：</p> <ul><li>熟悉 <code>Promise</code> 的概念及使用</li> <li>熟悉 <code>async/await</code> 的概念及使用</li> <li>了解 <code>Generator</code> 的概念</li></ul> <h3 id="generator-基础复习"><a href="#generator-基础复习" class="header-anchor">#</a> Generator 基础复习</h3> <p>首先复习一下 Js Generator 的基本用法：</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token operator">*</span> <span class="token function">work</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> r <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token string">'hi'</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span>      <span class="token comment">// 'ha'</span>
+    <span class="token keyword">return</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> gen <span class="token operator">=</span> <span class="token function">work</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>gen<span class="token punctuation">)</span>        <span class="token comment">// Object [Generator] {}</span>
+
+<span class="token keyword">let</span> result <span class="token operator">=</span> gen<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>     <span class="token comment">// { value: 'hi', done: false }</span>
+
+result <span class="token operator">=</span> gen<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token string">'ha'</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>     <span class="token comment">// { value: undefined', done: true }</span>
+
+<span class="token comment">// output summary:</span>
+<span class="token comment">// Object [Generator] {}</span>
+<span class="token comment">// { value: 'hi', done: false }</span>
+<span class="token comment">// ha</span>
+<span class="token comment">// { value: undefined', done: true }</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><p>我们调用 <code>work()</code> 这个函数时它返回的是一个 Generator 对象 <code>gen</code>；
+然后我们调用 <code>gen.next()</code> 返回值是 <code>{ value: 'hi', done: false }</code>, 其中 <code>value</code> 字段就是 <code>yield</code> 关键字返回给我们的数据，<code>done</code> 字段表示该 Generator 函数当前并没有执行结束，并且暂停在了 <code>yield</code> 所在的这一行。</p> <p>当我们第二次调用 <code>gen.next('ha')</code> 的时候，Generator 函数继续执行，并将我们传给 next() 函数的参数值 <code>'ha'</code> 返回并赋值给变量 <code>r</code>，然后继续运行并打印出 <code>r</code>，直到遇到 <code>return</code> 语句，函数返回 <code>{ value: undefined', done: true }</code> 给我们。</p> <p>其中 value 是返回值， done 表示 Generator 函数已执行结束并返回。</p> <blockquote><p>Generator 函数的一个特点是可以使用 yeild 关键字暂停当前函数的执行，并向调用者返回相应数据以及自己的运行状态（ 代码中的 <code>done</code> 字段）。
+另外一个特点是，调用者通过 <code>next()</code> 函数恢复 Generator 执行时可以通过参数传数据给 Generator 作为 yield 的返回值 （赋给代码中的变量 <code>r</code>)。</p></blockquote> <h3 id="run"><a href="#run" class="header-anchor">#</a> run()</h3> <p>有了前面关于 Generator 知识的复习，我们实现本文的核心函数；
+它接收一个 Generator 函数 <code>fn</code> 作为参数，它的功能就是模拟 <code>async/await</code> 机制运行该 <code>fn</code> 函数。</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> gen <span class="token operator">=</span> <span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">function</span> <span class="token function">_next</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">const</span> <span class="token punctuation">{</span> value<span class="token punctuation">,</span> done <span class="token punctuation">}</span> <span class="token operator">=</span> gen<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>done<span class="token punctuation">)</span> <span class="token keyword">return</span> value
+
+        <span class="token keyword">if</span><span class="token punctuation">(</span>value<span class="token punctuation">.</span>then<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            value<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">data</span> <span class="token operator">=&gt;</span> <span class="token function">_next</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+            <span class="token function">_next</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">_next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>在解释我们这个 <code>run()</code> 函数之前，先看一下它的用法示例:</p> <div class="language-js line-numbers-mode"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token parameter">duration</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">slept </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>duration<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">ms</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span> duration<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token operator">*</span> <span class="token function">work</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> ret <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>ret<span class="token punctuation">)</span>
+    <span class="token keyword">const</span> ret2 <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>ret2<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">run</span><span class="token punctuation">(</span>work<span class="token punctuation">)</span>
+<span class="token comment">// output</span>
+<span class="token comment">// slept 1000ms</span>
+<span class="token comment">// slept 2000ms</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><p>看了这个示例代码，应该就能明白 <code>run()</code> 的作用了，实际上通过这个函数，我们已经模拟实现了 <code>async/await</code> 机制；</p> <p>我们做个不严谨的类比来说明：</p> <ul><li><code>function * work() { }</code> 中间的 * 号就相当于 <code>async</code> 关键字的作用；</li> <li><code>yield</code> 关键字就相当于 <code>await</code> 关键字；</li></ul> <h3 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h3> <p>实际上 <code>async/await</code> 关键字也可以认为是 ES7 的语法糖，我们已经通过 <code>run()</code> 函数来模拟了其工作原理，至于 Js 引擎具体怎么实现的，未来我们写 分析 v8 引擎实现相关文章的时候再细究。</p></div></div> <footer class="page-edit" data-v-7dd611ab><!----> <!----></footer> <!----> </main></div></div> <div class="sidebar-mask" data-v-0c77f194></div> <aside class="sidebar" data-v-0c77f194><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/categories/" class="nav-link">
+  博客
+</a></div> <!----></nav>  <!----> </aside> <div class="footer-wrap py-20 bg-gray-500" data-v-717d1cf8 data-v-0c77f194><div class="w-full text-center text-white" data-v-717d1cf8>
+    合肥灼灼信息技术有限公司
+  </div> <div class="w-full text-center text-white mt-2" data-v-717d1cf8>
+    Copyright © 2020-present zhuo-zhuo.com
+  </div> <div class="w-full text-center  mt-2" data-v-717d1cf8><a href="https://beian.miit.gov.cn/" target="blank" class="text-gray-300 text-sm" data-v-717d1cf8>皖ICP备20009670号-2</a></div></div></div></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.0ba7f43e.js" defer></script><script src="/assets/js/8.8fe45a55.js" defer></script><script src="/assets/js/1.2d515849.js" defer></script><script src="/assets/js/26.83e2cc3e.js" defer></script>
+  </body>
+</html>

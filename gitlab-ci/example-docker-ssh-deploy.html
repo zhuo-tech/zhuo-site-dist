@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>GitLab CI 示例：Docker 镜像打包发布 &amp; SSH 部署 | 灼灼前端</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    
+    <meta name="description" content="移动端App开发网页:Flutter 原生跨端开发、Flutter 集成 Android & iOS 混合开发，丝滑高帧的用户体验。小程序开发:JS/TS、Vue、React、Uni-app 多端开发，小游戏、Three.js 3D、车联网地图应用。三方技术顾问:项目报价、合同、风险，项目管理、跟进与协调、验收；系统运维、压力测试。">
+    <meta name="baidu-site-verification" content="code-GLMGFYoFh6">
+    
+    <link rel="preload" href="/assets/css/0.styles.7659f3c6.css" as="style"><link rel="preload" href="/assets/js/app.0ba7f43e.js" as="script"><link rel="preload" href="/assets/js/8.8fe45a55.js" as="script"><link rel="preload" href="/assets/js/1.2d515849.js" as="script"><link rel="preload" href="/assets/js/20.f9b868f4.js" as="script"><link rel="prefetch" href="/assets/js/10.70ee330d.js"><link rel="prefetch" href="/assets/js/11.9a517545.js"><link rel="prefetch" href="/assets/js/12.b3d78d9c.js"><link rel="prefetch" href="/assets/js/13.19acdff0.js"><link rel="prefetch" href="/assets/js/14.39ceab07.js"><link rel="prefetch" href="/assets/js/15.af69e1fe.js"><link rel="prefetch" href="/assets/js/16.d20572e3.js"><link rel="prefetch" href="/assets/js/17.1e25eef3.js"><link rel="prefetch" href="/assets/js/18.5c1cd5e9.js"><link rel="prefetch" href="/assets/js/19.fa6002d0.js"><link rel="prefetch" href="/assets/js/21.fc723abd.js"><link rel="prefetch" href="/assets/js/22.e721e36b.js"><link rel="prefetch" href="/assets/js/23.70157ced.js"><link rel="prefetch" href="/assets/js/24.bb0911e9.js"><link rel="prefetch" href="/assets/js/25.a6430ad1.js"><link rel="prefetch" href="/assets/js/26.83e2cc3e.js"><link rel="prefetch" href="/assets/js/27.6058922f.js"><link rel="prefetch" href="/assets/js/28.77e7e8f0.js"><link rel="prefetch" href="/assets/js/29.b7c2dcc4.js"><link rel="prefetch" href="/assets/js/3.5eef70fb.js"><link rel="prefetch" href="/assets/js/30.1b0ecbdc.js"><link rel="prefetch" href="/assets/js/31.19b7e0c5.js"><link rel="prefetch" href="/assets/js/32.6eee722d.js"><link rel="prefetch" href="/assets/js/33.58e00e54.js"><link rel="prefetch" href="/assets/js/34.746f015b.js"><link rel="prefetch" href="/assets/js/35.8f20e914.js"><link rel="prefetch" href="/assets/js/36.70533f68.js"><link rel="prefetch" href="/assets/js/37.3aa121fc.js"><link rel="prefetch" href="/assets/js/38.cd127ab8.js"><link rel="prefetch" href="/assets/js/39.ca650a41.js"><link rel="prefetch" href="/assets/js/4.a8aeca64.js"><link rel="prefetch" href="/assets/js/40.0c650fd3.js"><link rel="prefetch" href="/assets/js/41.0ea1abd2.js"><link rel="prefetch" href="/assets/js/42.9ab2e744.js"><link rel="prefetch" href="/assets/js/43.75e6f56c.js"><link rel="prefetch" href="/assets/js/44.526194c2.js"><link rel="prefetch" href="/assets/js/5.9ccab7e1.js"><link rel="prefetch" href="/assets/js/6.fe151a09.js"><link rel="prefetch" href="/assets/js/7.4294dc96.js"><link rel="prefetch" href="/assets/js/9.a08196e9.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7659f3c6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div data-v-623b3d5a><div class="theme-container" data-v-0c77f194 data-v-623b3d5a><header class="navbar" data-v-0c77f194><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="灼灼前端" class="logo"> <span class="site-name can-hide">灼灼前端</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/categories/" class="nav-link">
+  博客
+</a></div> <!----></nav></div></header> <div class="main-layout" data-v-0c77f194 data-v-623b3d5a><div class="left-part" data-v-0c77f194 data-v-623b3d5a></div> <div class="right-part" data-v-0c77f194 data-v-623b3d5a><main class="container px-2 md:px-10 lg:pl-20 mx-auto " data-v-7dd611ab data-v-623b3d5a> <div class="text-center pt-4" data-v-7dd611ab><div class="text-2xl md:text-3xl font-light " data-v-7dd611ab>GitLab CI 示例：Docker 镜像打包发布 &amp; SSH 部署</div> <div class="flex justify-center text-sm text-gray-400 flex-wrap mt-6" data-v-7dd611ab><div data-v-7dd611ab>
+        分类于
+        <span class="pr-2" data-v-7dd611ab><a href="/categories/ci-cd/" class="underline" data-v-7dd611ab>CI/CD</a></span><span class="pr-2" data-v-7dd611ab><a href="/categories/gitlab-ci-cd/" class="underline" data-v-7dd611ab>GitLab CI/CD</a></span></div> <div class="ml-2" data-v-7dd611ab>
+        发表于
+        <span class="text-gray-600 border-b border-dashed border-gray-400 cursor-not-allowed" data-v-7dd611ab>2018-11-19</span></div> <div class="ml-2" data-v-7dd611ab>
+        作者:
+        <span class="text-gray-600 border-b border-dashed border-gray-400 cursor-not-allowed" data-v-7dd611ab>灼灼团队</span></div> <div class="ml-3" data-v-7dd611ab>
+        本文字数:
+        <span class="text-gray-500" data-v-7dd611ab>
+          1448
+        </span></div> <div class="ml-3" data-v-7dd611ab>
+        阅读时长 ≈
+        <span data-v-7dd611ab> 4.8 分钟 </span></div></div></div> <div class="mt-10" data-v-7dd611ab><div class="content content__default" data-v-7dd611ab><h3 id="目标"><a href="#目标" class="header-anchor">#</a> 目标</h3> <p>当我们 push 代码到 git 仓库时，将项目部署到目标服务器上，具体步骤：</p> <div class="language- extra-class"><pre><code>- 基于代码仓库中的 Dockerfile 构建代码镜像
+- 将构建的代码镜像推送到我们的私有镜像仓库
+- 通过 ssh 连接目标服务器，远程执行部署指令，基于代码镜像启动容器
+</code></pre></div> <h3 id="示例代码说明"><a href="#示例代码说明" class="header-anchor">#</a> 示例代码说明</h3> <div class="language-yml line-numbers-mode"><pre class="language-yml"><code><span class="token key atrule">stages</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> build
+  <span class="token punctuation">-</span> deploy
+
+<span class="token key atrule">variables</span><span class="token punctuation">:</span>
+  <span class="token key atrule">TARGET_IMAGE</span><span class="token punctuation">:</span> $REGISTRY_ADDR/maslow/ci<span class="token punctuation">-</span>example<span class="token punctuation">-</span>app<span class="token punctuation">:</span>latest
+  <span class="token key atrule">DOCKER_DRIVER</span><span class="token punctuation">:</span> overlay2
+
+<span class="token key atrule">build</span><span class="token punctuation">:</span>
+  <span class="token key atrule">image</span><span class="token punctuation">:</span> docker<span class="token punctuation">:</span>stable
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> build
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> docker login <span class="token punctuation">-</span>u $REGISTRY_USER <span class="token punctuation">-</span>p $REGISTRY_PASSWORD $REGISTRY_ADDR
+    <span class="token punctuation">-</span> docker pull $TARGET_IMAGE <span class="token punctuation">|</span><span class="token punctuation">|</span> true   <span class="token comment"># for docker build caching</span>
+    <span class="token punctuation">-</span> docker build <span class="token punctuation">-</span><span class="token punctuation">-</span>cache<span class="token punctuation">-</span>from $TARGET_IMAGE <span class="token punctuation">-</span><span class="token punctuation">-</span>tag $TARGET_IMAGE .
+    <span class="token punctuation">-</span> docker push $TARGET_IMAGE
+
+<span class="token key atrule">deploy</span><span class="token punctuation">:</span>
+  <span class="token key atrule">image</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">:</span>latest
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> deploy
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token string">'which ssh-agent || (apt-get update -y &amp;&amp; apt-get install openssh-client -y)'</span>
+    <span class="token punctuation">-</span> eval $(ssh<span class="token punctuation">-</span>agent <span class="token punctuation">-</span>s)
+    <span class="token punctuation">-</span> echo &quot;$SERVER_SSH_PRIV_KEY&quot; <span class="token punctuation">&gt;</span> deploy.key
+    <span class="token punctuation">-</span> mkdir <span class="token punctuation">-</span>p ~/.ssh
+    <span class="token punctuation">-</span> chmod 0600 deploy.key
+    <span class="token punctuation">-</span> ssh<span class="token punctuation">-</span>add deploy.key
+    <span class="token punctuation">-</span> <span class="token string">'[[ -f /.dockerenv ]] &amp;&amp; echo -e &quot;Host *\n\tStrictHostKeyChecking no\n\n&quot; &gt; ~/.ssh/config'</span>
+    <span class="token punctuation">-</span> ssh root@$SERVER_ADDR &quot;docker run <span class="token punctuation">-</span>d <span class="token punctuation">-</span>P $<span class="token punctuation">{</span>TARGET_IMAGE<span class="token punctuation">}</span>&quot;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br></div></div><p>这段 CI 脚本有两个 stage:</p> <div class="language- extra-class"><pre><code>- build  # 根据代码目录下的 Dockerfile 构建镜像，并 push 到镜像仓库
+- deploy # 通过 ssh 连接目标服务器，远程执行部署指令
+</code></pre></div><p>其中用到了一些预定义了一些环境变量：</p> <div class="language- extra-class"><pre><code>- REGISTRY_ADDR   # 私有镜像仓库的地址，例如：registry.cn-hangzhou.aliyuncs.com
+- REGISTRY_USER   # 私有镜像仓库用户名
+- REGISTRY_PASSWORD     # 私有镜像仓库密码
+- SERVER_SSH_PRIV_KEY   # 登陆目标服务器的私钥
+- SERVER_ADDR           # 目标服务器的地址
+</code></pre></div><p>预定义的环境变量并不在 <code>.gitlab-ci.yml</code> 中定义，因为它们往往是一些敏感信息，具体的设置方式是提前在 GitLab Web 端代码仓库设置页面填写：<code>Settings &gt; CI/CD &gt; Variables</code>。</p> <h3 id="参考链接"><a href="#参考链接" class="header-anchor">#</a> 参考链接</h3> <ul><li>GitLab Variables: https://docs.gitlab.com/ee/ci/variables/README.html#variables</li> <li>Using SSH keys with GitLab CI/CD: https://docs.gitlab.com/ee/ci/ssh_keys/README.html</li> <li>Building Docker images with GitLab CI/CD:
+https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#making-docker-in-docker-builds-faster-with-docker-layer-caching</li></ul></div></div> <footer class="page-edit" data-v-7dd611ab><!----> <!----></footer> <div class="page-nav" data-v-7dd611ab><p class="inner"><span class="prev">
+      ←
+      <a href="/gitlab-ci/example-node-js.html" class="prev">
+        GitLab CI 示例：构建 &amp; 测试 Node.js 应用
+      </a></span> <span class="next"><a href="/gitlab-ci/example-db-sync.html">
+        GitLab CI 示例：利用 CI 同步生产环境数据库到开发环境
+      </a>
+      →
+    </span></p></div> </main></div></div> <div class="sidebar-mask" data-v-0c77f194></div> <aside class="sidebar" data-v-0c77f194><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/categories/" class="nav-link">
+  博客
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/gitlab-ci/" aria-current="page" class="sidebar-link">GitLab CI 基本介绍</a></li><li><a href="/gitlab-ci/example-web-front-end.html" class="sidebar-link">GitLab CI 示例：构建 &amp; 部署 Web 前端项目（部署到 Swarm）</a></li><li><a href="/gitlab-ci/example-node-js.html" class="sidebar-link">GitLab CI 示例：构建 &amp; 测试 Node.js 应用</a></li><li><a href="/gitlab-ci/example-docker-ssh-deploy.html" aria-current="page" class="active sidebar-link">GitLab CI 示例：Docker 镜像打包发布 &amp; SSH 部署</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/gitlab-ci/example-db-sync.html" class="sidebar-link">GitLab CI 示例：利用 CI 同步生产环境数据库到开发环境</a></li></ul> </aside> <div class="footer-wrap py-20 bg-gray-500" data-v-717d1cf8 data-v-0c77f194><div class="w-full text-center text-white" data-v-717d1cf8>
+    合肥灼灼信息技术有限公司
+  </div> <div class="w-full text-center text-white mt-2" data-v-717d1cf8>
+    Copyright © 2020-present zhuo-zhuo.com
+  </div> <div class="w-full text-center  mt-2" data-v-717d1cf8><a href="https://beian.miit.gov.cn/" target="blank" class="text-gray-300 text-sm" data-v-717d1cf8>皖ICP备20009670号-2</a></div></div></div></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.0ba7f43e.js" defer></script><script src="/assets/js/8.8fe45a55.js" defer></script><script src="/assets/js/1.2d515849.js" defer></script><script src="/assets/js/20.f9b868f4.js" defer></script>
+  </body>
+</html>

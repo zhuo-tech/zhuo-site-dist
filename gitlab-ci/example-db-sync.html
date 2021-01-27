@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>GitLab CI 示例：利用 CI 同步生产环境数据库到开发环境 | 灼灼前端</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    
+    <meta name="description" content="移动端App开发网页:Flutter 原生跨端开发、Flutter 集成 Android & iOS 混合开发，丝滑高帧的用户体验。小程序开发:JS/TS、Vue、React、Uni-app 多端开发，小游戏、Three.js 3D、车联网地图应用。三方技术顾问:项目报价、合同、风险，项目管理、跟进与协调、验收；系统运维、压力测试。">
+    <meta name="baidu-site-verification" content="code-GLMGFYoFh6">
+    
+    <link rel="preload" href="/assets/css/0.styles.7659f3c6.css" as="style"><link rel="preload" href="/assets/js/app.0ba7f43e.js" as="script"><link rel="preload" href="/assets/js/8.8fe45a55.js" as="script"><link rel="preload" href="/assets/js/1.2d515849.js" as="script"><link rel="preload" href="/assets/js/19.fa6002d0.js" as="script"><link rel="prefetch" href="/assets/js/10.70ee330d.js"><link rel="prefetch" href="/assets/js/11.9a517545.js"><link rel="prefetch" href="/assets/js/12.b3d78d9c.js"><link rel="prefetch" href="/assets/js/13.19acdff0.js"><link rel="prefetch" href="/assets/js/14.39ceab07.js"><link rel="prefetch" href="/assets/js/15.af69e1fe.js"><link rel="prefetch" href="/assets/js/16.d20572e3.js"><link rel="prefetch" href="/assets/js/17.1e25eef3.js"><link rel="prefetch" href="/assets/js/18.5c1cd5e9.js"><link rel="prefetch" href="/assets/js/20.f9b868f4.js"><link rel="prefetch" href="/assets/js/21.fc723abd.js"><link rel="prefetch" href="/assets/js/22.e721e36b.js"><link rel="prefetch" href="/assets/js/23.70157ced.js"><link rel="prefetch" href="/assets/js/24.bb0911e9.js"><link rel="prefetch" href="/assets/js/25.a6430ad1.js"><link rel="prefetch" href="/assets/js/26.83e2cc3e.js"><link rel="prefetch" href="/assets/js/27.6058922f.js"><link rel="prefetch" href="/assets/js/28.77e7e8f0.js"><link rel="prefetch" href="/assets/js/29.b7c2dcc4.js"><link rel="prefetch" href="/assets/js/3.5eef70fb.js"><link rel="prefetch" href="/assets/js/30.1b0ecbdc.js"><link rel="prefetch" href="/assets/js/31.19b7e0c5.js"><link rel="prefetch" href="/assets/js/32.6eee722d.js"><link rel="prefetch" href="/assets/js/33.58e00e54.js"><link rel="prefetch" href="/assets/js/34.746f015b.js"><link rel="prefetch" href="/assets/js/35.8f20e914.js"><link rel="prefetch" href="/assets/js/36.70533f68.js"><link rel="prefetch" href="/assets/js/37.3aa121fc.js"><link rel="prefetch" href="/assets/js/38.cd127ab8.js"><link rel="prefetch" href="/assets/js/39.ca650a41.js"><link rel="prefetch" href="/assets/js/4.a8aeca64.js"><link rel="prefetch" href="/assets/js/40.0c650fd3.js"><link rel="prefetch" href="/assets/js/41.0ea1abd2.js"><link rel="prefetch" href="/assets/js/42.9ab2e744.js"><link rel="prefetch" href="/assets/js/43.75e6f56c.js"><link rel="prefetch" href="/assets/js/44.526194c2.js"><link rel="prefetch" href="/assets/js/5.9ccab7e1.js"><link rel="prefetch" href="/assets/js/6.fe151a09.js"><link rel="prefetch" href="/assets/js/7.4294dc96.js"><link rel="prefetch" href="/assets/js/9.a08196e9.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7659f3c6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div data-v-623b3d5a><div class="theme-container" data-v-0c77f194 data-v-623b3d5a><header class="navbar" data-v-0c77f194><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="灼灼前端" class="logo"> <span class="site-name can-hide">灼灼前端</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/categories/" class="nav-link">
+  博客
+</a></div> <!----></nav></div></header> <div class="main-layout" data-v-0c77f194 data-v-623b3d5a><div class="left-part" data-v-0c77f194 data-v-623b3d5a></div> <div class="right-part" data-v-0c77f194 data-v-623b3d5a><main class="container px-2 md:px-10 lg:pl-20 mx-auto " data-v-7dd611ab data-v-623b3d5a> <div class="text-center pt-4" data-v-7dd611ab><div class="text-2xl md:text-3xl font-light " data-v-7dd611ab>GitLab CI 示例：利用 CI 同步生产环境数据库到开发环境</div> <div class="flex justify-center text-sm text-gray-400 flex-wrap mt-6" data-v-7dd611ab><div data-v-7dd611ab>
+        分类于
+        <span class="pr-2" data-v-7dd611ab><a href="/categories/ci-cd/" class="underline" data-v-7dd611ab>CI/CD</a></span><span class="pr-2" data-v-7dd611ab><a href="/categories/gitlab-ci-cd/" class="underline" data-v-7dd611ab>GitLab CI/CD</a></span></div> <div class="ml-2" data-v-7dd611ab>
+        发表于
+        <span class="text-gray-600 border-b border-dashed border-gray-400 cursor-not-allowed" data-v-7dd611ab>2018-11-21</span></div> <div class="ml-2" data-v-7dd611ab>
+        作者:
+        <span class="text-gray-600 border-b border-dashed border-gray-400 cursor-not-allowed" data-v-7dd611ab>灼灼团队</span></div> <div class="ml-3" data-v-7dd611ab>
+        本文字数:
+        <span class="text-gray-500" data-v-7dd611ab>
+          3336
+        </span></div> <div class="ml-3" data-v-7dd611ab>
+        阅读时长 ≈
+        <span data-v-7dd611ab> 11.1 分钟 </span></div></div></div> <div class="mt-10" data-v-7dd611ab><div class="content content__default" data-v-7dd611ab><h2 id="问题"><a href="#问题" class="header-anchor">#</a> 问题</h2> <p>我们通常需要频繁的将生产环境(production)的数据库同步到 develop 和 staging 环境。</p> <p>之前我们的做法是写了一个 shell 在服务器上手动运行，这个需要测试人员和开发人员拥有服务器权限，甚至是生产环境的权限，风险较大且 “不够 CI/CD 化”。</p> <p>后来是想写一个 HTTP 服务来触发这样的数据库同步操作，增加了额外的工作开销，还要为这个服务配相应的 CI/CD，不如直接使用 GitLab CI 来完成这个工作。</p> <p>GitLab CI Pipeline 不仅可以在用户 push 代码的时候被触发，还可以通过 HTTP 调用的形式主动触发。</p> <h2 id="目标"><a href="#目标" class="header-anchor">#</a> 目标</h2> <p>开发 &amp; 测试人员将 production 环境的数据库同步到 develop / staging 环境：</p> <div class="language- extra-class"><pre><code>- 无需接触服务器环境
+- 任意时间可主动进行同步（相对于计划任务而言）
+- 可指定同步某个项目相关的数据库
+- 可指定同步到某个服务器环境 ( develop / staging )
+</code></pre></div><p>预设场景：</p> <div class="language- extra-class"><pre><code>- 有三个数据库项目：project-a  project-b  project-c
+- 有三个服务器环境：production  develop  staging
+- 通过 GitLab CI Pipeline Triggers 来触发执行(HTTP方式)
+- 我们可任意指定同步某一个项目的 production 数据库到 develop 或 staging
+</code></pre></div> <p>首先，我们建了一个新的 GitLab Repo，可以叫作 <code>db-sync</code>，并开始配置其 CI Pipeline。</p> <h2 id="示例代码"><a href="#示例代码" class="header-anchor">#</a> 示例代码</h2> <div class="language-yml line-numbers-mode"><pre class="language-yml"><code><span class="token comment"># .gitlab-ci.yml</span>
+<span class="token key atrule">stages</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> dump
+  <span class="token punctuation">-</span> upload
+  <span class="token punctuation">-</span> restore
+
+<span class="token key atrule">before_script</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> if <span class="token punctuation">[</span> $TO = dev <span class="token punctuation">]</span>;then export SERVER_HOST=$DEV_SERVER_HOST;fi
+  <span class="token punctuation">-</span> if <span class="token punctuation">[</span> $TO = stg <span class="token punctuation">]</span>;then export SERVER_HOST=$STG_SERVER_HOST;fi
+  <span class="token punctuation">-</span> if <span class="token punctuation">[</span> $PROJECT = project<span class="token punctuation">-</span>a <span class="token punctuation">]</span>;then export MONGO_DB=project<span class="token punctuation">-</span>a<span class="token punctuation">-</span>db;fi
+  <span class="token punctuation">-</span> if <span class="token punctuation">[</span> $PROJECT = project<span class="token punctuation">-</span>b <span class="token punctuation">]</span>;then export MONGO_DB=project<span class="token punctuation">-</span>b<span class="token punctuation">-</span>db;fi
+  <span class="token punctuation">-</span> if <span class="token punctuation">[</span> $PROJECT = project<span class="token punctuation">-</span>c <span class="token punctuation">]</span>;then export MONGO_DB=project<span class="token punctuation">-</span>c<span class="token punctuation">-</span>db;fi
+  
+<span class="token key atrule">cache</span><span class="token punctuation">:</span>
+  <span class="token key atrule">paths</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> tmp_data
+
+<span class="token key atrule">dump_db</span><span class="token punctuation">:</span>
+  <span class="token key atrule">image</span><span class="token punctuation">:</span> mongo<span class="token punctuation">:</span>latest
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> dump
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> rm <span class="token punctuation">-</span>rf tmp_data <span class="token punctuation">|</span><span class="token punctuation">|</span> true
+    <span class="token punctuation">-</span> mkdir tmp_data <span class="token punctuation">|</span><span class="token punctuation">|</span> true
+    <span class="token punctuation">-</span> <span class="token punctuation">&gt;</span><span class="token scalar string">
+      mongodump -h $MONGO_HOST --port=$MONGO_PORT -u $MONGO_USER
+       -p $MONGO_PASSWORD -d $MONGO_DB --out=tmp_data</span>
+    <span class="token punctuation">-</span> cd tmp_data/$MONGO_DB <span class="token important">&amp;&amp;</span> tar <span class="token punctuation">-</span>zcvf ./../data.tar.gz ./*
+  <span class="token key atrule">only</span><span class="token punctuation">:</span>
+    <span class="token key atrule">variables</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> $PROJECT
+      <span class="token punctuation">-</span> $TO
+
+<span class="token key atrule">upload_db</span><span class="token punctuation">:</span>
+  <span class="token key atrule">image</span><span class="token punctuation">:</span> laogen/openssh<span class="token punctuation">-</span>client<span class="token punctuation">:</span>latest
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> upload
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> eval $(ssh<span class="token punctuation">-</span>agent <span class="token punctuation">-</span>s)
+    <span class="token punctuation">-</span> echo &quot;$SERVER_SSH_PRIV_KEY&quot; <span class="token punctuation">&gt;</span> deploy.key
+    <span class="token punctuation">-</span> mkdir <span class="token punctuation">-</span>p ~/.ssh
+    <span class="token punctuation">-</span> chmod 0600 deploy.key
+    <span class="token punctuation">-</span> ssh<span class="token punctuation">-</span>add deploy.key
+    <span class="token punctuation">-</span> <span class="token string">'[[ -f /.dockerenv ]] &amp;&amp; echo -e &quot;Host *\n\tStrictHostKeyChecking no\n\n&quot; &gt; ~/.ssh/config'</span>
+    <span class="token punctuation">-</span> ssh root@$SERVER_HOST &quot;rm <span class="token punctuation">-</span>rf /srv/db<span class="token punctuation">-</span>data/$PROJECT/_data/ <span class="token punctuation">|</span><span class="token punctuation">|</span> true&quot;
+    <span class="token punctuation">-</span> ssh root@$SERVER_HOST &quot;rm <span class="token punctuation">-</span>rf /srv/db<span class="token punctuation">-</span>data/$PROJECT/data.tar.gz <span class="token punctuation">|</span><span class="token punctuation">|</span> true&quot;
+    <span class="token punctuation">-</span> scp tmp_data/data.tar.gz root@$SERVER_HOST<span class="token punctuation">:</span>/srv/db<span class="token punctuation">-</span>data/$PROJECT/data.tar.gz
+    <span class="token punctuation">-</span> ssh root@$SERVER_HOST &quot;mkdir <span class="token punctuation">-</span>p /srv/db<span class="token punctuation">-</span>data/$PROJECT/_data <span class="token punctuation">|</span><span class="token punctuation">|</span> true&quot;
+    <span class="token punctuation">-</span> ssh root@$SERVER_HOST &quot;tar zxvf /srv/db<span class="token punctuation">-</span>data/$PROJECT/data.tar.gz <span class="token punctuation">-</span>C /srv/db<span class="token punctuation">-</span>data/$PROJECT/_data&quot;
+  <span class="token key atrule">only</span><span class="token punctuation">:</span>
+    <span class="token key atrule">variables</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> $PROJECT
+
+<span class="token key atrule">restore</span><span class="token punctuation">:</span>
+  <span class="token key atrule">image</span><span class="token punctuation">:</span> laogen/openssh<span class="token punctuation">-</span>client<span class="token punctuation">:</span>latest
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> restore
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> eval $(ssh<span class="token punctuation">-</span>agent <span class="token punctuation">-</span>s)
+    <span class="token punctuation">-</span> echo &quot;$SERVER_SSH_PRIV_KEY&quot; <span class="token punctuation">&gt;</span> deploy.key
+    <span class="token punctuation">-</span> mkdir <span class="token punctuation">-</span>p ~/.ssh
+    <span class="token punctuation">-</span> chmod 0600 deploy.key
+    <span class="token punctuation">-</span> ssh<span class="token punctuation">-</span>add deploy.key
+    <span class="token punctuation">-</span> <span class="token string">'[[ -f /.dockerenv ]] &amp;&amp; echo -e &quot;Host *\n\tStrictHostKeyChecking no\n\n&quot; &gt; ~/.ssh/config'</span>
+    <span class="token punctuation">-</span> scp restore.sh root@$SERVER_HOST<span class="token punctuation">:</span>/srv/db<span class="token punctuation">-</span>bak/$PROJECT/restore.sh
+    <span class="token punctuation">-</span> export CONTAINER_ID='$(docker ps <span class="token punctuation">-</span>f name='$PROJECT' <span class="token punctuation">-</span>f ancestor=bitnami/mongodb <span class="token punctuation">-</span>q)'
+    <span class="token punctuation">-</span> ssh root@$SERVER_HOST &quot;docker exec $CONTAINER_ID sh /bitnami/restore.sh&quot;
+  <span class="token key atrule">only</span><span class="token punctuation">:</span>
+    <span class="token key atrule">variables</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> $TO
+      <span class="token punctuation">-</span> $PROJECT
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br></div></div><p>这个 Pipeline 有三个 stages：</p> <div class="language- extra-class"><pre><code>- dump 从 prod 数据库中把数据导出为文件
+- upload 将数据文件上传到 dev/stg 目标服务器
+- restore 通过 ssh 远程连接到目标服务器，将数据文件导入(restore)到 mongo 中
+</code></pre></div><p>其中涉及的 ssh 等操作前文具体讲过，不了解的话可移步 {% post_link gitlab-ci/example-docker-ssh-deploy GitLab CI 示例：Docker 镜像打包发布 &amp; SSH 部署 %}。</p> <p>这段 CI 脚本是我在实际工作中使用的，其中 mongodb 是使用 <code>bitnami/mongodb</code> 镜像启动的，所以会有 <code>bitnami</code> 相关的字眼，需要了解的话请查看文末的相关链接。</p> <p>如果使用其它 <code>mongo</code> 镜像或者其它数据库（ <code>mysql</code> 等）需要做相应的调整，这里只是提供一个思路作为参考。</p> <p><code>restore.sh</code> 这个文件在 git repo中，它被挂载到数据库容器中执行的：</p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># restore.sh</span>
+mongorestore --drop -u <span class="token variable">$MONGODB_USERNAME</span> -p <span class="token variable">$MONGODB_PASSWORD</span> -d <span class="token variable">$MONGODB_DATABASE</span> /bitnami/_data
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h2 id="触发同步"><a href="#触发同步" class="header-anchor">#</a> 触发同步</h2> <p>我们通过 <code>$PROJECT</code> 来控制要同步哪个项目的数据库；
+通过 <code>$TO</code> 控制要同步到哪个服务器环境(develop / staging)。</p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># 同步 project-a 项目的数据库到 dev 环境</span>
+<span class="token function">curl</span> -X POST -F <span class="token assign-left variable">token</span><span class="token operator">=</span>XXXXXXX <span class="token punctuation">\</span>
+    -F <span class="token assign-left variable">ref</span><span class="token operator">=</span>master -F <span class="token string">&quot;variables[TO]=dev&quot;</span> <span class="token punctuation">\</span>
+    -F <span class="token string">&quot;variables[PROJECT]=project-a&quot;</span> <span class="token punctuation">\</span>
+    https://gitlab.com/api/v4/projects/xxxxxx/trigger/pipeline
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># 同步 project-b 项目的数据库到 stg 环境</span>
+<span class="token function">curl</span> -X POST -F <span class="token assign-left variable">token</span><span class="token operator">=</span>XXXXXXX <span class="token punctuation">\</span>
+    -F <span class="token assign-left variable">ref</span><span class="token operator">=</span>master -F <span class="token string">&quot;variables[TO]=stg&quot;</span> <span class="token punctuation">\</span>
+    -F <span class="token string">&quot;variables[PROJECT]=project-b&quot;</span> <span class="token punctuation">\</span>
+    https://gitlab.com/api/v4/projects/xxxxxx/trigger/pipeline
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>我们通过 GitLab CI 的 HTTP 触发机制触发 Pipeline 的执行。
+其中 <code>token</code> 和 <code>url</code> 在 GitLab 仓库的设置页面获取 <code>Settings &gt; CI/CD &gt; Pipeline triggers &gt; Add trigger</code>，该页面中有详情的使用说明。</p> <h2 id="小结"><a href="#小结" class="header-anchor">#</a> 小结</h2> <p>上面触发的例子是通过 <code>curl</code> 发送请求完成的，也可以使用 Webhook 的方式，这样可以把请求链接加入到浏览器的书签中，需要同步数据库的时候，直接打开相应的书签即可快捷完成。</p> <p>这种方式不仅可以用来同步数据库，还可以用来同步其它生产环境的数据，比如文件资源等。</p> <p>同时，除去用来同步数据，也可用于备份数据等工作。</p> <h2 id="相关链接"><a href="#相关链接" class="header-anchor">#</a> 相关链接</h2> <ul><li>bitnami/mongodb: https://github.com/bitnami/bitnami-docker-mongodb</li> <li>MongoDB 备份(mongodump)与恢复(mongorestore)
+http://www.runoob.com/mongodb/mongodb-mongodump-mongorestore.html</li></ul></div></div> <footer class="page-edit" data-v-7dd611ab><!----> <!----></footer> <div class="page-nav" data-v-7dd611ab><p class="inner"><span class="prev">
+      ←
+      <a href="/gitlab-ci/example-docker-ssh-deploy.html" class="prev">
+        GitLab CI 示例：Docker 镜像打包发布 &amp; SSH 部署
+      </a></span> <!----></p></div> </main></div></div> <div class="sidebar-mask" data-v-0c77f194></div> <aside class="sidebar" data-v-0c77f194><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/categories/" class="nav-link">
+  博客
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/gitlab-ci/" aria-current="page" class="sidebar-link">GitLab CI 基本介绍</a></li><li><a href="/gitlab-ci/example-web-front-end.html" class="sidebar-link">GitLab CI 示例：构建 &amp; 部署 Web 前端项目（部署到 Swarm）</a></li><li><a href="/gitlab-ci/example-node-js.html" class="sidebar-link">GitLab CI 示例：构建 &amp; 测试 Node.js 应用</a></li><li><a href="/gitlab-ci/example-docker-ssh-deploy.html" class="sidebar-link">GitLab CI 示例：Docker 镜像打包发布 &amp; SSH 部署</a></li><li><a href="/gitlab-ci/example-db-sync.html" aria-current="page" class="active sidebar-link">GitLab CI 示例：利用 CI 同步生产环境数据库到开发环境</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/gitlab-ci/example-db-sync.html#问题" class="sidebar-link">问题</a></li><li class="sidebar-sub-header"><a href="/gitlab-ci/example-db-sync.html#目标" class="sidebar-link">目标</a></li><li class="sidebar-sub-header"><a href="/gitlab-ci/example-db-sync.html#示例代码" class="sidebar-link">示例代码</a></li><li class="sidebar-sub-header"><a href="/gitlab-ci/example-db-sync.html#触发同步" class="sidebar-link">触发同步</a></li><li class="sidebar-sub-header"><a href="/gitlab-ci/example-db-sync.html#小结" class="sidebar-link">小结</a></li><li class="sidebar-sub-header"><a href="/gitlab-ci/example-db-sync.html#相关链接" class="sidebar-link">相关链接</a></li></ul></li></ul> </aside> <div class="footer-wrap py-20 bg-gray-500" data-v-717d1cf8 data-v-0c77f194><div class="w-full text-center text-white" data-v-717d1cf8>
+    合肥灼灼信息技术有限公司
+  </div> <div class="w-full text-center text-white mt-2" data-v-717d1cf8>
+    Copyright © 2020-present zhuo-zhuo.com
+  </div> <div class="w-full text-center  mt-2" data-v-717d1cf8><a href="https://beian.miit.gov.cn/" target="blank" class="text-gray-300 text-sm" data-v-717d1cf8>皖ICP备20009670号-2</a></div></div></div></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.0ba7f43e.js" defer></script><script src="/assets/js/8.8fe45a55.js" defer></script><script src="/assets/js/1.2d515849.js" defer></script><script src="/assets/js/19.fa6002d0.js" defer></script>
+  </body>
+</html>

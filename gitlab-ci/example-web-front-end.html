@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>GitLab CI 示例：构建 &amp; 部署 Web 前端项目（部署到 Swarm） | 灼灼前端</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    
+    <meta name="description" content="移动端App开发网页:Flutter 原生跨端开发、Flutter 集成 Android & iOS 混合开发，丝滑高帧的用户体验。小程序开发:JS/TS、Vue、React、Uni-app 多端开发，小游戏、Three.js 3D、车联网地图应用。三方技术顾问:项目报价、合同、风险，项目管理、跟进与协调、验收；系统运维、压力测试。">
+    <meta name="baidu-site-verification" content="code-GLMGFYoFh6">
+    
+    <link rel="preload" href="/assets/css/0.styles.7659f3c6.css" as="style"><link rel="preload" href="/assets/js/app.0ba7f43e.js" as="script"><link rel="preload" href="/assets/js/8.8fe45a55.js" as="script"><link rel="preload" href="/assets/js/1.2d515849.js" as="script"><link rel="preload" href="/assets/js/22.e721e36b.js" as="script"><link rel="prefetch" href="/assets/js/10.70ee330d.js"><link rel="prefetch" href="/assets/js/11.9a517545.js"><link rel="prefetch" href="/assets/js/12.b3d78d9c.js"><link rel="prefetch" href="/assets/js/13.19acdff0.js"><link rel="prefetch" href="/assets/js/14.39ceab07.js"><link rel="prefetch" href="/assets/js/15.af69e1fe.js"><link rel="prefetch" href="/assets/js/16.d20572e3.js"><link rel="prefetch" href="/assets/js/17.1e25eef3.js"><link rel="prefetch" href="/assets/js/18.5c1cd5e9.js"><link rel="prefetch" href="/assets/js/19.fa6002d0.js"><link rel="prefetch" href="/assets/js/20.f9b868f4.js"><link rel="prefetch" href="/assets/js/21.fc723abd.js"><link rel="prefetch" href="/assets/js/23.70157ced.js"><link rel="prefetch" href="/assets/js/24.bb0911e9.js"><link rel="prefetch" href="/assets/js/25.a6430ad1.js"><link rel="prefetch" href="/assets/js/26.83e2cc3e.js"><link rel="prefetch" href="/assets/js/27.6058922f.js"><link rel="prefetch" href="/assets/js/28.77e7e8f0.js"><link rel="prefetch" href="/assets/js/29.b7c2dcc4.js"><link rel="prefetch" href="/assets/js/3.5eef70fb.js"><link rel="prefetch" href="/assets/js/30.1b0ecbdc.js"><link rel="prefetch" href="/assets/js/31.19b7e0c5.js"><link rel="prefetch" href="/assets/js/32.6eee722d.js"><link rel="prefetch" href="/assets/js/33.58e00e54.js"><link rel="prefetch" href="/assets/js/34.746f015b.js"><link rel="prefetch" href="/assets/js/35.8f20e914.js"><link rel="prefetch" href="/assets/js/36.70533f68.js"><link rel="prefetch" href="/assets/js/37.3aa121fc.js"><link rel="prefetch" href="/assets/js/38.cd127ab8.js"><link rel="prefetch" href="/assets/js/39.ca650a41.js"><link rel="prefetch" href="/assets/js/4.a8aeca64.js"><link rel="prefetch" href="/assets/js/40.0c650fd3.js"><link rel="prefetch" href="/assets/js/41.0ea1abd2.js"><link rel="prefetch" href="/assets/js/42.9ab2e744.js"><link rel="prefetch" href="/assets/js/43.75e6f56c.js"><link rel="prefetch" href="/assets/js/44.526194c2.js"><link rel="prefetch" href="/assets/js/5.9ccab7e1.js"><link rel="prefetch" href="/assets/js/6.fe151a09.js"><link rel="prefetch" href="/assets/js/7.4294dc96.js"><link rel="prefetch" href="/assets/js/9.a08196e9.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7659f3c6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div data-v-623b3d5a><div class="theme-container" data-v-0c77f194 data-v-623b3d5a><header class="navbar" data-v-0c77f194><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="灼灼前端" class="logo"> <span class="site-name can-hide">灼灼前端</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/categories/" class="nav-link">
+  博客
+</a></div> <!----></nav></div></header> <div class="main-layout" data-v-0c77f194 data-v-623b3d5a><div class="left-part" data-v-0c77f194 data-v-623b3d5a></div> <div class="right-part" data-v-0c77f194 data-v-623b3d5a><main class="container px-2 md:px-10 lg:pl-20 mx-auto " data-v-7dd611ab data-v-623b3d5a> <div class="text-center pt-4" data-v-7dd611ab><div class="text-2xl md:text-3xl font-light " data-v-7dd611ab>GitLab CI 示例：构建 &amp; 部署 Web 前端项目（部署到 Swarm）</div> <div class="flex justify-center text-sm text-gray-400 flex-wrap mt-6" data-v-7dd611ab><div data-v-7dd611ab>
+        分类于
+        <span class="pr-2" data-v-7dd611ab><a href="/categories/ci-cd/" class="underline" data-v-7dd611ab>CI/CD</a></span><span class="pr-2" data-v-7dd611ab><a href="/categories/gitlab-ci-cd/" class="underline" data-v-7dd611ab>GitLab CI/CD</a></span></div> <div class="ml-2" data-v-7dd611ab>
+        发表于
+        <span class="text-gray-600 border-b border-dashed border-gray-400 cursor-not-allowed" data-v-7dd611ab>2018-11-22</span></div> <div class="ml-2" data-v-7dd611ab>
+        作者:
+        <span class="text-gray-600 border-b border-dashed border-gray-400 cursor-not-allowed" data-v-7dd611ab>灼灼团队</span></div> <div class="ml-3" data-v-7dd611ab>
+        本文字数:
+        <span class="text-gray-500" data-v-7dd611ab>
+          2029
+        </span></div> <div class="ml-3" data-v-7dd611ab>
+        阅读时长 ≈
+        <span data-v-7dd611ab> 6.8 分钟 </span></div></div></div> <div class="mt-10" data-v-7dd611ab><div class="content content__default" data-v-7dd611ab><h2 id="问题"><a href="#问题" class="header-anchor">#</a> 问题</h2> <p>Web 前端的应用需要在 node 环境下安装依赖和构建，但是发布一般又是用 nginx 镜像，我们既不想在 node 容器里安装 nginx，也不想在 nginx 容器里安装 node；</p> <h2 id="tl-dr"><a href="#tl-dr" class="header-anchor">#</a> TL;DR</h2> <p>所以，我们先在一个 node 容器中 build 应用，利用 GitLab CI Cache 机制，将构建后的目标文件（通常是 dist 文件夹）缓存，以便在发布阶段 (release stage) 可以使用。</p> <p>这里我所谓的 release 是指发布 docker image ，所以需要一个 Dockerfile，并且是以 nginx image 为基础镜像构建的。</p> <p>我这里是部署到 swarm 集群上，所以会首先把 <code>docker-stack.yml</code> 文件 scp 到目标服务器上。</p> <h2 id="例说"><a href="#例说" class="header-anchor">#</a> 例说</h2> <div class="language-py line-numbers-mode"><pre class="language-py"><code><span class="token comment"># Dockerfile</span>
+FROM bitnami<span class="token operator">/</span>nginx<span class="token punctuation">:</span>latest
+COPY <span class="token punctuation">.</span><span class="token operator">/</span>dist <span class="token operator">/</span>app
+EXPOSE <span class="token number">8080</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><div class="language-yml line-numbers-mode"><pre class="language-yml"><code><span class="token comment"># .gitlab-ci.yml</span>
+<span class="token key atrule">image</span><span class="token punctuation">:</span> node<span class="token punctuation">:</span><span class="token number">10</span>
+<span class="token key atrule">stages</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> build
+  <span class="token punctuation">-</span> release
+  <span class="token punctuation">-</span> deploy
+
+<span class="token key atrule">cache</span><span class="token punctuation">:</span>
+  <span class="token key atrule">paths</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> node_modules/
+    <span class="token punctuation">-</span> dist/
+
+<span class="token key atrule">before_script</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> if <span class="token punctuation">[</span> $CI_COMMIT_REF_NAME = master <span class="token punctuation">]</span>;then export SERVER_HOST=$DEV_SERVER_HOST;fi
+  <span class="token punctuation">-</span> if <span class="token punctuation">[</span> $CI_COMMIT_REF_NAME = prod <span class="token punctuation">]</span>;then export SERVER_HOST=$PROD_SERVER_HOST;fi
+  <span class="token punctuation">-</span> if <span class="token punctuation">[</span> $CI_COMMIT_REF_NAME = master <span class="token punctuation">]</span>;then export BUILD_VERSION=dev;fi
+  <span class="token punctuation">-</span> if <span class="token punctuation">[</span> $CI_COMMIT_REF_NAME = prod <span class="token punctuation">]</span>;then export BUILD_VERSION=prod;fi
+
+<span class="token key atrule">variables</span><span class="token punctuation">:</span>
+  <span class="token key atrule">CONTAINER_IMAGE</span><span class="token punctuation">:</span> $REGISTRY_ADDR/$REGISTRY_NAMESPACE/$CI_PROJECT_NAME
+  <span class="token key atrule">CONTAINER_IMAGE_VERSION</span><span class="token punctuation">:</span> <span class="token string">&quot;${CI_COMMIT_REF_NAME}_latest&quot;</span>
+  <span class="token key atrule">CONTAINER_IMAGE_VERSION_HASH</span><span class="token punctuation">:</span> <span class="token string">&quot;${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHA}&quot;</span>
+  <span class="token key atrule">DOCKER_DRIVER</span><span class="token punctuation">:</span> overlay2
+
+<span class="token key atrule">build</span><span class="token punctuation">:</span>
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> build
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> npm install
+    <span class="token punctuation">-</span> npm run build<span class="token punctuation">:</span>$BUILD_VERSION
+
+<span class="token key atrule">release</span><span class="token punctuation">:</span>
+  <span class="token key atrule">image</span><span class="token punctuation">:</span> docker<span class="token punctuation">:</span>dind
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> release
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> ls <span class="token punctuation">-</span>lh dist
+    <span class="token punctuation">-</span> docker login <span class="token punctuation">-</span>u $REGISTRY_USER <span class="token punctuation">-</span>p $REGISTRY_PASSWORD $REGISTRY_ADDR
+    <span class="token punctuation">-</span> docker pull $CONTAINER_IMAGE<span class="token punctuation">:</span>$CONTAINER_IMAGE_VERSION <span class="token punctuation">|</span><span class="token punctuation">|</span> true
+    <span class="token punctuation">-</span> docker build <span class="token punctuation">-</span><span class="token punctuation">-</span>cache<span class="token punctuation">-</span>from $CONTAINER_IMAGE<span class="token punctuation">:</span>$CONTAINER_IMAGE_VERSION <span class="token punctuation">-</span><span class="token punctuation">-</span>tag $CONTAINER_IMAGE<span class="token punctuation">:</span>$CONTAINER_IMAGE_VERSION_HASH <span class="token punctuation">-</span><span class="token punctuation">-</span>tag $CONTAINER_IMAGE<span class="token punctuation">:</span>$CONTAINER_IMAGE_VERSION .
+    <span class="token punctuation">-</span> docker push $CONTAINER_IMAGE<span class="token punctuation">:</span>$CONTAINER_IMAGE_VERSION
+    <span class="token punctuation">-</span> docker push $CONTAINER_IMAGE<span class="token punctuation">:</span>$CONTAINER_IMAGE_VERSION_HASH
+
+<span class="token key atrule">deploy</span><span class="token punctuation">:</span>
+  <span class="token key atrule">image</span><span class="token punctuation">:</span> laogen/openssh<span class="token punctuation">-</span>client<span class="token punctuation">:</span>latest
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> deploy
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> eval $(ssh<span class="token punctuation">-</span>agent <span class="token punctuation">-</span>s)
+    <span class="token punctuation">-</span> echo &quot;$SERVER_SSH_PRIV_KEY&quot; <span class="token punctuation">&gt;</span> deploy.key
+    <span class="token punctuation">-</span> mkdir <span class="token punctuation">-</span>p ~/.ssh
+    <span class="token punctuation">-</span> chmod 0600 deploy.key
+    <span class="token punctuation">-</span> ssh<span class="token punctuation">-</span>add deploy.key
+    <span class="token punctuation">-</span> <span class="token string">'[[ -f /.dockerenv ]] &amp;&amp; echo -e &quot;Host *\n\tStrictHostKeyChecking no\n\n&quot; &gt; ~/.ssh/config'</span>
+    <span class="token punctuation">-</span> scp docker<span class="token punctuation">-</span>stack.$<span class="token punctuation">{</span>BUILD_VERSION<span class="token punctuation">}</span>.yml root@$SERVER_HOST<span class="token punctuation">:</span>/srv/web/docker<span class="token punctuation">-</span>stack.yml
+    <span class="token punctuation">-</span> ssh root@$SERVER_HOST &quot;docker login <span class="token punctuation">-</span>u $REGISTRY_USER <span class="token punctuation">-</span>p $REGISTRY_PASSWORD $REGISTRY_ADDR&quot;
+    <span class="token punctuation">-</span> ssh root@$SERVER_HOST &quot;cd /srv/web <span class="token important">&amp;&amp;</span> docker stack deploy <span class="token punctuation">-</span>c docker<span class="token punctuation">-</span>stack.yml ProjectName <span class="token punctuation">-</span><span class="token punctuation">-</span>with<span class="token punctuation">-</span>registry<span class="token punctuation">-</span>auth&quot;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br></div></div><h2 id="小结"><a href="#小结" class="header-anchor">#</a> 小结</h2> <p>这个例子是从实际工作项目中略删减得来的，更完整综合一些。</p> <p>这个 Pipeline 一共三个阶段：</p> <ul><li>build   # 构建前端项目</li> <li>release # 发布 Docker 镜像</li> <li>deploy  # 部署到 Swarm 上</li></ul> <p>在 build 阶段完成后，将 build 的结果 <code>dist</code> 缓存起来，这样到 realse 阶段时，就可以把它们打包到镜像里了，然后 push 到镜像仓库；</p> <p>deploy 阶段就是 ssh 连接远程执行命令部署，与之前不同的是，这次是部署在 swarm 上，我们先将 <code>docker-stack.yml</code> 上传到目标服务器，然后远程执行部署指令，这块没什么可说的。</p></div></div> <footer class="page-edit" data-v-7dd611ab><!----> <!----></footer> <div class="page-nav" data-v-7dd611ab><p class="inner"><span class="prev">
+      ←
+      <a href="/gitlab-ci/" class="prev router-link-active">
+        GitLab CI 基本介绍
+      </a></span> <span class="next"><a href="/gitlab-ci/example-node-js.html">
+        GitLab CI 示例：构建 &amp; 测试 Node.js 应用
+      </a>
+      →
+    </span></p></div> </main></div></div> <div class="sidebar-mask" data-v-0c77f194></div> <aside class="sidebar" data-v-0c77f194><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/categories/" class="nav-link">
+  博客
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/gitlab-ci/" aria-current="page" class="sidebar-link">GitLab CI 基本介绍</a></li><li><a href="/gitlab-ci/example-web-front-end.html" aria-current="page" class="active sidebar-link">GitLab CI 示例：构建 &amp; 部署 Web 前端项目（部署到 Swarm）</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/gitlab-ci/example-web-front-end.html#问题" class="sidebar-link">问题</a></li><li class="sidebar-sub-header"><a href="/gitlab-ci/example-web-front-end.html#tl-dr" class="sidebar-link">TL;DR</a></li><li class="sidebar-sub-header"><a href="/gitlab-ci/example-web-front-end.html#例说" class="sidebar-link">例说</a></li><li class="sidebar-sub-header"><a href="/gitlab-ci/example-web-front-end.html#小结" class="sidebar-link">小结</a></li></ul></li><li><a href="/gitlab-ci/example-node-js.html" class="sidebar-link">GitLab CI 示例：构建 &amp; 测试 Node.js 应用</a></li><li><a href="/gitlab-ci/example-docker-ssh-deploy.html" class="sidebar-link">GitLab CI 示例：Docker 镜像打包发布 &amp; SSH 部署</a></li><li><a href="/gitlab-ci/example-db-sync.html" class="sidebar-link">GitLab CI 示例：利用 CI 同步生产环境数据库到开发环境</a></li></ul> </aside> <div class="footer-wrap py-20 bg-gray-500" data-v-717d1cf8 data-v-0c77f194><div class="w-full text-center text-white" data-v-717d1cf8>
+    合肥灼灼信息技术有限公司
+  </div> <div class="w-full text-center text-white mt-2" data-v-717d1cf8>
+    Copyright © 2020-present zhuo-zhuo.com
+  </div> <div class="w-full text-center  mt-2" data-v-717d1cf8><a href="https://beian.miit.gov.cn/" target="blank" class="text-gray-300 text-sm" data-v-717d1cf8>皖ICP备20009670号-2</a></div></div></div></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.0ba7f43e.js" defer></script><script src="/assets/js/8.8fe45a55.js" defer></script><script src="/assets/js/1.2d515849.js" defer></script><script src="/assets/js/22.e721e36b.js" defer></script>
+  </body>
+</html>

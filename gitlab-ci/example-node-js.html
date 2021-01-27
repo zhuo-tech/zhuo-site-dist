@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>GitLab CI 示例：构建 &amp; 测试 Node.js 应用 | 灼灼前端</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    
+    <meta name="description" content="移动端App开发网页:Flutter 原生跨端开发、Flutter 集成 Android & iOS 混合开发，丝滑高帧的用户体验。小程序开发:JS/TS、Vue、React、Uni-app 多端开发，小游戏、Three.js 3D、车联网地图应用。三方技术顾问:项目报价、合同、风险，项目管理、跟进与协调、验收；系统运维、压力测试。">
+    <meta name="baidu-site-verification" content="code-GLMGFYoFh6">
+    
+    <link rel="preload" href="/assets/css/0.styles.7659f3c6.css" as="style"><link rel="preload" href="/assets/js/app.0ba7f43e.js" as="script"><link rel="preload" href="/assets/js/8.8fe45a55.js" as="script"><link rel="preload" href="/assets/js/1.2d515849.js" as="script"><link rel="preload" href="/assets/js/21.fc723abd.js" as="script"><link rel="prefetch" href="/assets/js/10.70ee330d.js"><link rel="prefetch" href="/assets/js/11.9a517545.js"><link rel="prefetch" href="/assets/js/12.b3d78d9c.js"><link rel="prefetch" href="/assets/js/13.19acdff0.js"><link rel="prefetch" href="/assets/js/14.39ceab07.js"><link rel="prefetch" href="/assets/js/15.af69e1fe.js"><link rel="prefetch" href="/assets/js/16.d20572e3.js"><link rel="prefetch" href="/assets/js/17.1e25eef3.js"><link rel="prefetch" href="/assets/js/18.5c1cd5e9.js"><link rel="prefetch" href="/assets/js/19.fa6002d0.js"><link rel="prefetch" href="/assets/js/20.f9b868f4.js"><link rel="prefetch" href="/assets/js/22.e721e36b.js"><link rel="prefetch" href="/assets/js/23.70157ced.js"><link rel="prefetch" href="/assets/js/24.bb0911e9.js"><link rel="prefetch" href="/assets/js/25.a6430ad1.js"><link rel="prefetch" href="/assets/js/26.83e2cc3e.js"><link rel="prefetch" href="/assets/js/27.6058922f.js"><link rel="prefetch" href="/assets/js/28.77e7e8f0.js"><link rel="prefetch" href="/assets/js/29.b7c2dcc4.js"><link rel="prefetch" href="/assets/js/3.5eef70fb.js"><link rel="prefetch" href="/assets/js/30.1b0ecbdc.js"><link rel="prefetch" href="/assets/js/31.19b7e0c5.js"><link rel="prefetch" href="/assets/js/32.6eee722d.js"><link rel="prefetch" href="/assets/js/33.58e00e54.js"><link rel="prefetch" href="/assets/js/34.746f015b.js"><link rel="prefetch" href="/assets/js/35.8f20e914.js"><link rel="prefetch" href="/assets/js/36.70533f68.js"><link rel="prefetch" href="/assets/js/37.3aa121fc.js"><link rel="prefetch" href="/assets/js/38.cd127ab8.js"><link rel="prefetch" href="/assets/js/39.ca650a41.js"><link rel="prefetch" href="/assets/js/4.a8aeca64.js"><link rel="prefetch" href="/assets/js/40.0c650fd3.js"><link rel="prefetch" href="/assets/js/41.0ea1abd2.js"><link rel="prefetch" href="/assets/js/42.9ab2e744.js"><link rel="prefetch" href="/assets/js/43.75e6f56c.js"><link rel="prefetch" href="/assets/js/44.526194c2.js"><link rel="prefetch" href="/assets/js/5.9ccab7e1.js"><link rel="prefetch" href="/assets/js/6.fe151a09.js"><link rel="prefetch" href="/assets/js/7.4294dc96.js"><link rel="prefetch" href="/assets/js/9.a08196e9.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7659f3c6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div data-v-623b3d5a><div class="theme-container" data-v-0c77f194 data-v-623b3d5a><header class="navbar" data-v-0c77f194><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="灼灼前端" class="logo"> <span class="site-name can-hide">灼灼前端</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/categories/" class="nav-link">
+  博客
+</a></div> <!----></nav></div></header> <div class="main-layout" data-v-0c77f194 data-v-623b3d5a><div class="left-part" data-v-0c77f194 data-v-623b3d5a></div> <div class="right-part" data-v-0c77f194 data-v-623b3d5a><main class="container px-2 md:px-10 lg:pl-20 mx-auto " data-v-7dd611ab data-v-623b3d5a> <div class="text-center pt-4" data-v-7dd611ab><div class="text-2xl md:text-3xl font-light " data-v-7dd611ab>GitLab CI 示例：构建 &amp; 测试 Node.js 应用</div> <div class="flex justify-center text-sm text-gray-400 flex-wrap mt-6" data-v-7dd611ab><div data-v-7dd611ab>
+        分类于
+        <span class="pr-2" data-v-7dd611ab><a href="/categories/ci-cd/" class="underline" data-v-7dd611ab>CI/CD</a></span><span class="pr-2" data-v-7dd611ab><a href="/categories/gitlab-ci-cd/" class="underline" data-v-7dd611ab>GitLab CI/CD</a></span></div> <div class="ml-2" data-v-7dd611ab>
+        发表于
+        <span class="text-gray-600 border-b border-dashed border-gray-400 cursor-not-allowed" data-v-7dd611ab>2018-11-14</span></div> <div class="ml-2" data-v-7dd611ab>
+        作者:
+        <span class="text-gray-600 border-b border-dashed border-gray-400 cursor-not-allowed" data-v-7dd611ab>灼灼团队</span></div> <div class="ml-3" data-v-7dd611ab>
+        本文字数:
+        <span class="text-gray-500" data-v-7dd611ab>
+          1813
+        </span></div> <div class="ml-3" data-v-7dd611ab>
+        阅读时长 ≈
+        <span data-v-7dd611ab> 6.0 分钟 </span></div></div></div> <div class="mt-10" data-v-7dd611ab><div class="content content__default" data-v-7dd611ab><p>通过解释说明一个简单的 Node.js 应用的 <code>Pipeline</code> 示例来介绍 GitLab CI 的工作方式和使用。</p> <p>其中会重点介绍 GitLab CI 的执行过程，<code>Stage</code> <code>Job</code> 等基础概念，以及缓存策略。
+</p> <h2 id="示例定义"><a href="#示例定义" class="header-anchor">#</a> 示例定义</h2> <p>下面是一个简单的 Node.js 应用的 pipeline 定义：</p> <div class="language-yaml line-numbers-mode"><pre class="language-yaml"><code><span class="token comment"># .gitlab-ci.yml</span>
+<span class="token key atrule">stages</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> build
+  <span class="token punctuation">-</span> test
+
+<span class="token key atrule">cache</span><span class="token punctuation">:</span>
+  <span class="token key atrule">paths</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> node_modules/
+
+<span class="token key atrule">build_job</span><span class="token punctuation">:</span>
+  <span class="token key atrule">image</span><span class="token punctuation">:</span> node<span class="token punctuation">:</span><span class="token number">10</span>
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> build
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> npm version
+    <span class="token punctuation">-</span> npm install
+
+<span class="token key atrule">test_job</span><span class="token punctuation">:</span>
+  <span class="token key atrule">image</span><span class="token punctuation">:</span> node<span class="token punctuation">:</span><span class="token number">10</span>
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> test
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> npm run test
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><h2 id="解释说明"><a href="#解释说明" class="header-anchor">#</a> 解释说明</h2> <p>逐一介绍一下这几个字段：</p> <h3 id="stages"><a href="#stages" class="header-anchor">#</a> stages</h3> <div class="language-yaml line-numbers-mode"><pre class="language-yaml"><code><span class="token key atrule">stages</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> build
+  <span class="token punctuation">-</span> test
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>stage 定义了 pipeline 的执行步骤，也就是说 stages 是有序执行的。每个 stages 可包括多个 Job，Job 才是 CI Runner 要执行的任务。</p> <p>上面的 pipeline 包括 build 和 test 两个步骤，先执行完所有 build 阶段的 Job，才会执行 test 阶段的 Job。</p> <p>如果 build 阶段的 Job 执行失败了，则整个 pipeline 失败并中断执行，不会继续执行 test stage 了。</p> <p>下面就来介绍什么是 Job.</p> <h3 id="build-job"><a href="#build-job" class="header-anchor">#</a> build_job</h3> <div class="language-yaml line-numbers-mode"><pre class="language-yaml"><code><span class="token key atrule">build_job</span><span class="token punctuation">:</span>
+  <span class="token key atrule">image</span><span class="token punctuation">:</span> node<span class="token punctuation">:</span><span class="token number">10</span> 
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> build
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> npm version
+    <span class="token punctuation">-</span> npm install
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p><code>build_job</code> 是 Job 的名称，可以自由定义；</p> <p><code>stage</code> 字段指定该 Job 属于 <code>build</code> 阶段的；</p> <p><code>script</code> 就是自定义的构建脚本了，这里就是简单的 <code>npm install</code>；</p> <p><code>image</code> 这个是指定 <code>script</code> 脚本的执行环境，它的值应该是一个 Docker 镜像。</p> <p>Runner 开始执行这个 Job 时，首先会 pull 项目的最新代码，然后基于这个镜像启动一个容器并把代码挂载到容器里，最后在这个容器里面执行 <code>script</code> 定义的脚本。因为我们这里使用的是 node:10 作为作业的镜像，所以在 <code>script</code> 里才可以直接用 npm。</p> <h3 id="test-job"><a href="#test-job" class="header-anchor">#</a> test_job</h3> <div class="language-yaml line-numbers-mode"><pre class="language-yaml"><code><span class="token key atrule">test_job</span><span class="token punctuation">:</span>
+  <span class="token key atrule">image</span><span class="token punctuation">:</span> node<span class="token punctuation">:</span><span class="token number">10</span>
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> test
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> npm run test
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p><code>test_job</code> 同样是一个 Job，它属于 <code>test stage</code>，在上面的 <code>stages</code> 定义中 <code>test</code> 是在 <code>build</code> 之后的，所以它会等所有 <code>build</code> 阶段的 Job 执行完之后才会被执行。</p> <blockquote><p>重点来了：每个 Job 是独立执行的，互相隔离的。 Runner 在执行 <code>test_job</code> 的时候，会重新 pull 应用的最新代码，然后启动一个新容器并挂载代码，再在里面执行 script 脚本。</p></blockquote> <p>这就会导致一个问题： 在 <code>test_job</code> 中我们并没有执行 <code>npm install</code> 就直接执行了 <code>npm run test</code>，理论上会是报错的！</p> <p>这就要介绍最后一个未介绍的字段 <code>cache</code>.</p> <h3 id="cache"><a href="#cache" class="header-anchor">#</a> cache</h3> <div class="language-yaml line-numbers-mode"><pre class="language-yaml"><code><span class="token key atrule">cache</span><span class="token punctuation">:</span>
+  <span class="token key atrule">paths</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> node_modules/
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p><code>cache</code> 是 pipeline 中定义 Job 之间的缓存的；</p> <p>我们这里定义的 <code>cache</code> 是全局的，即作用于所有 Job 的；</p> <p><code>paths</code> 定义需要缓存的目录，若需要，你可以指定多个；</p> <p>缓存的逻辑是这样的：</p> <div class="language- extra-class"><pre><code>- 执行 build_job 时会检查之前无有缓存
+- 如果有缓存就下载到 `paths` 指定的缓存目录，无则忽略
+- build_job 执行结束之前，会重新把缓存目录缓存起来
+- test_job 执行之前，同样检查有无缓存，有则下载
+</code></pre></div><p>所以，test_job 的 script 中没有执行 <code>npm install</code> 是因为我们将 <code>node_modules</code> 目录缓存了。</p> <p>缓存是提高 Job 执行效率的策略，不仅仅是多个 Job 之间；</p> <p>同一个 Job 在多次 pipeline 中也会共用缓存，意思是：</p> <div class="language- extra-class"><pre><code>- build_job 第一次运行时并没有缓存
+- 下次 pipeline 执行时，npm install 就会基于缓存的 node_modules 更新，而不是全量下载了
+</code></pre></div><h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <p>通过这个示例，基本就了解 GitLab CI 的工作过程和定义方式了；</p> <p>其中缓存策略是非常常用的，这里使用的是全局缓存，还可以指定某个 Job 特有有缓存策略。</p> <p>想进一步了解缓存，请查看官方文档关于缓存的详细说明:
+https://docs.gitlab.com/ee/ci/yaml/README.html#cache</p> <p>这个简单的示例，只是展示了 Node.js 应用的构建和测试，一个更完整的 CI 流程通常还会包括 <code>部署(deploy)</code>，接下来会继续通过示例讲解使用 GitLab CI 的更多使用。</p></div></div> <footer class="page-edit" data-v-7dd611ab><!----> <!----></footer> <div class="page-nav" data-v-7dd611ab><p class="inner"><span class="prev">
+      ←
+      <a href="/gitlab-ci/example-web-front-end.html" class="prev">
+        GitLab CI 示例：构建 &amp; 部署 Web 前端项目（部署到 Swarm）
+      </a></span> <span class="next"><a href="/gitlab-ci/example-docker-ssh-deploy.html">
+        GitLab CI 示例：Docker 镜像打包发布 &amp; SSH 部署
+      </a>
+      →
+    </span></p></div> </main></div></div> <div class="sidebar-mask" data-v-0c77f194></div> <aside class="sidebar" data-v-0c77f194><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/categories/" class="nav-link">
+  博客
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/gitlab-ci/" aria-current="page" class="sidebar-link">GitLab CI 基本介绍</a></li><li><a href="/gitlab-ci/example-web-front-end.html" class="sidebar-link">GitLab CI 示例：构建 &amp; 部署 Web 前端项目（部署到 Swarm）</a></li><li><a href="/gitlab-ci/example-node-js.html" aria-current="page" class="active sidebar-link">GitLab CI 示例：构建 &amp; 测试 Node.js 应用</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/gitlab-ci/example-node-js.html#示例定义" class="sidebar-link">示例定义</a></li><li class="sidebar-sub-header"><a href="/gitlab-ci/example-node-js.html#解释说明" class="sidebar-link">解释说明</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/gitlab-ci/example-node-js.html#stages" class="sidebar-link">stages</a></li><li class="sidebar-sub-header"><a href="/gitlab-ci/example-node-js.html#build-job" class="sidebar-link">build_job</a></li><li class="sidebar-sub-header"><a href="/gitlab-ci/example-node-js.html#test-job" class="sidebar-link">test_job</a></li><li class="sidebar-sub-header"><a href="/gitlab-ci/example-node-js.html#cache" class="sidebar-link">cache</a></li></ul></li><li class="sidebar-sub-header"><a href="/gitlab-ci/example-node-js.html#总结" class="sidebar-link">总结</a></li></ul></li><li><a href="/gitlab-ci/example-docker-ssh-deploy.html" class="sidebar-link">GitLab CI 示例：Docker 镜像打包发布 &amp; SSH 部署</a></li><li><a href="/gitlab-ci/example-db-sync.html" class="sidebar-link">GitLab CI 示例：利用 CI 同步生产环境数据库到开发环境</a></li></ul> </aside> <div class="footer-wrap py-20 bg-gray-500" data-v-717d1cf8 data-v-0c77f194><div class="w-full text-center text-white" data-v-717d1cf8>
+    合肥灼灼信息技术有限公司
+  </div> <div class="w-full text-center text-white mt-2" data-v-717d1cf8>
+    Copyright © 2020-present zhuo-zhuo.com
+  </div> <div class="w-full text-center  mt-2" data-v-717d1cf8><a href="https://beian.miit.gov.cn/" target="blank" class="text-gray-300 text-sm" data-v-717d1cf8>皖ICP备20009670号-2</a></div></div></div></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.0ba7f43e.js" defer></script><script src="/assets/js/8.8fe45a55.js" defer></script><script src="/assets/js/1.2d515849.js" defer></script><script src="/assets/js/21.fc723abd.js" defer></script>
+  </body>
+</html>

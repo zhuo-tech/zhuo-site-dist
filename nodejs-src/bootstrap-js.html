@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Node.js 源码分析 - 加载 js 文件 | 灼灼前端</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    
+    <meta name="description" content="移动端App开发网页:Flutter 原生跨端开发、Flutter 集成 Android & iOS 混合开发，丝滑高帧的用户体验。小程序开发:JS/TS、Vue、React、Uni-app 多端开发，小游戏、Three.js 3D、车联网地图应用。三方技术顾问:项目报价、合同、风险，项目管理、跟进与协调、验收；系统运维、压力测试。">
+    <meta name="baidu-site-verification" content="code-GLMGFYoFh6">
+    
+    <link rel="preload" href="/assets/css/0.styles.7659f3c6.css" as="style"><link rel="preload" href="/assets/js/app.0ba7f43e.js" as="script"><link rel="preload" href="/assets/js/8.8fe45a55.js" as="script"><link rel="preload" href="/assets/js/1.2d515849.js" as="script"><link rel="preload" href="/assets/js/28.77e7e8f0.js" as="script"><link rel="prefetch" href="/assets/js/10.70ee330d.js"><link rel="prefetch" href="/assets/js/11.9a517545.js"><link rel="prefetch" href="/assets/js/12.b3d78d9c.js"><link rel="prefetch" href="/assets/js/13.19acdff0.js"><link rel="prefetch" href="/assets/js/14.39ceab07.js"><link rel="prefetch" href="/assets/js/15.af69e1fe.js"><link rel="prefetch" href="/assets/js/16.d20572e3.js"><link rel="prefetch" href="/assets/js/17.1e25eef3.js"><link rel="prefetch" href="/assets/js/18.5c1cd5e9.js"><link rel="prefetch" href="/assets/js/19.fa6002d0.js"><link rel="prefetch" href="/assets/js/20.f9b868f4.js"><link rel="prefetch" href="/assets/js/21.fc723abd.js"><link rel="prefetch" href="/assets/js/22.e721e36b.js"><link rel="prefetch" href="/assets/js/23.70157ced.js"><link rel="prefetch" href="/assets/js/24.bb0911e9.js"><link rel="prefetch" href="/assets/js/25.a6430ad1.js"><link rel="prefetch" href="/assets/js/26.83e2cc3e.js"><link rel="prefetch" href="/assets/js/27.6058922f.js"><link rel="prefetch" href="/assets/js/29.b7c2dcc4.js"><link rel="prefetch" href="/assets/js/3.5eef70fb.js"><link rel="prefetch" href="/assets/js/30.1b0ecbdc.js"><link rel="prefetch" href="/assets/js/31.19b7e0c5.js"><link rel="prefetch" href="/assets/js/32.6eee722d.js"><link rel="prefetch" href="/assets/js/33.58e00e54.js"><link rel="prefetch" href="/assets/js/34.746f015b.js"><link rel="prefetch" href="/assets/js/35.8f20e914.js"><link rel="prefetch" href="/assets/js/36.70533f68.js"><link rel="prefetch" href="/assets/js/37.3aa121fc.js"><link rel="prefetch" href="/assets/js/38.cd127ab8.js"><link rel="prefetch" href="/assets/js/39.ca650a41.js"><link rel="prefetch" href="/assets/js/4.a8aeca64.js"><link rel="prefetch" href="/assets/js/40.0c650fd3.js"><link rel="prefetch" href="/assets/js/41.0ea1abd2.js"><link rel="prefetch" href="/assets/js/42.9ab2e744.js"><link rel="prefetch" href="/assets/js/43.75e6f56c.js"><link rel="prefetch" href="/assets/js/44.526194c2.js"><link rel="prefetch" href="/assets/js/5.9ccab7e1.js"><link rel="prefetch" href="/assets/js/6.fe151a09.js"><link rel="prefetch" href="/assets/js/7.4294dc96.js"><link rel="prefetch" href="/assets/js/9.a08196e9.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7659f3c6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div data-v-623b3d5a><div class="theme-container" data-v-0c77f194 data-v-623b3d5a><header class="navbar" data-v-0c77f194><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="灼灼前端" class="logo"> <span class="site-name can-hide">灼灼前端</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/categories/" class="nav-link">
+  博客
+</a></div> <!----></nav></div></header> <div class="main-layout" data-v-0c77f194 data-v-623b3d5a><div class="left-part" data-v-0c77f194 data-v-623b3d5a></div> <div class="right-part" data-v-0c77f194 data-v-623b3d5a><main class="container px-2 md:px-10 lg:pl-20 mx-auto " data-v-7dd611ab data-v-623b3d5a> <div class="text-center pt-4" data-v-7dd611ab><div class="text-2xl md:text-3xl font-light " data-v-7dd611ab>Node.js 源码分析 - 加载 js 文件</div> <div class="flex justify-center text-sm text-gray-400 flex-wrap mt-6" data-v-7dd611ab><div data-v-7dd611ab>
+        分类于
+        <span class="pr-2" data-v-7dd611ab><a href="/categories/node-js-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="underline" data-v-7dd611ab>Node.js 源码分析</a></span></div> <div class="ml-2" data-v-7dd611ab>
+        发表于
+        <span class="text-gray-600 border-b border-dashed border-gray-400 cursor-not-allowed" data-v-7dd611ab>2018-12-01</span></div> <div class="ml-2" data-v-7dd611ab>
+        作者:
+        <span class="text-gray-600 border-b border-dashed border-gray-400 cursor-not-allowed" data-v-7dd611ab>灼灼团队</span></div> <div class="ml-3" data-v-7dd611ab>
+        本文字数:
+        <span class="text-gray-500" data-v-7dd611ab>
+          3392
+        </span></div> <div class="ml-3" data-v-7dd611ab>
+        阅读时长 ≈
+        <span data-v-7dd611ab> 11.3 分钟 </span></div></div></div> <div class="mt-10" data-v-7dd611ab><div class="content content__default" data-v-7dd611ab><h3 id="提出问题"><a href="#提出问题" class="header-anchor">#</a> 提出问题</h3> <blockquote><p>了解 js 文件加载前的准备工作</p></blockquote> <p>在《{% post_link nodejs/nodejs-src/the-main 从 main 函数开始 %}》这篇中说到了 <code>LoadEnvironment()</code> 函数负责加载 js 代码，但并没有继续说明加载细节。</p> <p>这篇从 <code>LoadEnvironment()</code> 开始探究 js 代码加载的详细过程。</p> <h3 id="loadenvironment"><a href="#loadenvironment" class="header-anchor">#</a> LoadEnvironment()</h3> <p><code>LoadEnvironment()</code> 的逻辑分两部分：</p> <ol><li>加载并执行两个 js 文件：<code>loaders.js</code> <code>node.js</code>，执行后得到两个启动函数；</li> <li>分别调用这两个启动函数：loaders_bootstrapper() 和 node_bootstrapper();</li></ol> <p>这段代码比较长，我们把不影响主逻辑的代码省略掉，然后直接在代码中以注释的形式来解释：</p> <div class="language-cpp line-numbers-mode"><pre class="language-cpp"><code><span class="token keyword">void</span> <span class="token function">LoadEnvironment</span><span class="token punctuation">(</span>Environment<span class="token operator">*</span> env<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// ...</span>
+  
+  <span class="token comment">/************************************************************/</span>
+  <span class="token comment">/**** 第一步.加载并执行两个 js 文件：`loaders.js` `node.js`****/</span>
+  <span class="token comment">/************************************************************/</span>
+
+  <span class="token comment">// The bootstrapper scripts are lib/internal/bootstrap/loaders.js and</span>
+  <span class="token comment">// lib/internal/bootstrap/node.js, each included as a static C string</span>
+  <span class="token comment">// defined in node_javascript.h, generated in node_javascript.cc by</span>
+  <span class="token comment">// node_js2c.</span>
+
+  <span class="token comment">// 这两个 js 文件在 node 构建过程中就被转换成了 C++ 代码，即以 C++ 字符串的</span>
+  <span class="token comment">// 形式存在于 C++ 代码中，根据这个文件名就可以直接获取相应的 js 代码字符串；</span>
+
+  <span class="token comment">// loaders.js 的文件名</span>
+  Local<span class="token operator">&lt;</span>String<span class="token operator">&gt;</span> loaders_name <span class="token operator">=</span>
+      <span class="token function">FIXED_ONE_BYTE_STRING</span><span class="token punctuation">(</span>env<span class="token operator">-&gt;</span><span class="token function">isolate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;internal/bootstrap/loaders.js&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  
+  <span class="token comment">// 执行 loaders.js 得到函数： `loaders_bootstrapper`</span>
+  MaybeLocal<span class="token operator">&lt;</span>Function<span class="token operator">&gt;</span> loaders_bootstrapper <span class="token operator">=</span>
+      <span class="token function">GetBootstrapper</span><span class="token punctuation">(</span>env<span class="token punctuation">,</span> <span class="token function">LoadersBootstrapperSource</span><span class="token punctuation">(</span>env<span class="token punctuation">)</span><span class="token punctuation">,</span> loaders_name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// node.js 文件名</span>
+  Local<span class="token operator">&lt;</span>String<span class="token operator">&gt;</span> node_name <span class="token operator">=</span>
+      <span class="token function">FIXED_ONE_BYTE_STRING</span><span class="token punctuation">(</span>env<span class="token operator">-&gt;</span><span class="token function">isolate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;internal/bootstrap/node.js&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 执行 loaders.js 得到函数： `loaders_bootstrapper`</span>
+  MaybeLocal<span class="token operator">&lt;</span>Function<span class="token operator">&gt;</span> node_bootstrapper <span class="token operator">=</span>
+      <span class="token function">GetBootstrapper</span><span class="token punctuation">(</span>env<span class="token punctuation">,</span> <span class="token function">NodeBootstrapperSource</span><span class="token punctuation">(</span>env<span class="token punctuation">)</span><span class="token punctuation">,</span> node_name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 上面代码中：LoadersBootstrapperSource() &amp; NodeBootstrapperSource() 是</span>
+  <span class="token comment">// 在 /src/node_javascript.h 头文件中声明的，node 源码中并没有它们的具体实现，</span>
+  <span class="token comment">// 它们的实现代码是在 node 本身构建过程中生成的；</span>
+  <span class="token comment">// 至于 GetBootstrapper()，它的作用是编译&amp;执行 js 代码，返回执行结果。</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>loaders_bootstrapper<span class="token punctuation">.</span><span class="token function">IsEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">||</span> node_bootstrapper<span class="token punctuation">.</span><span class="token function">IsEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  Local<span class="token operator">&lt;</span>Object<span class="token operator">&gt;</span> global <span class="token operator">=</span> env<span class="token operator">-&gt;</span><span class="token function">context</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">Global</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// ...</span>
+  <span class="token comment">// Expose the global object as a property on itself</span>
+  <span class="token comment">// (Allows you to set stuff on `global` from anywhere in JavaScript.)</span>
+  global<span class="token operator">-&gt;</span><span class="token function">Set</span><span class="token punctuation">(</span><span class="token function">FIXED_ONE_BYTE_STRING</span><span class="token punctuation">(</span>env<span class="token operator">-&gt;</span><span class="token function">isolate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;global&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> global<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">/*************************************************************************/</span>
+  <span class="token comment">/* 第二步.分别调用这两个启动函数:loaders_bootstrapper、node_bootstrapper ****/</span>
+  <span class="token comment">/*************************************************************************/</span>
+
+  <span class="token comment">// Create binding loaders</span>
+  <span class="token comment">// 基于 GetBinding() 函数模板 创建 get_binding_fn 函数</span>
+  Local<span class="token operator">&lt;</span>Function<span class="token operator">&gt;</span> get_binding_fn <span class="token operator">=</span>
+      env<span class="token operator">-&gt;</span><span class="token function">NewFunctionTemplate</span><span class="token punctuation">(</span>GetBinding<span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">GetFunction</span><span class="token punctuation">(</span>env<span class="token operator">-&gt;</span><span class="token function">context</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">.</span><span class="token function">ToLocalChecked</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 基于 GetLinkedBinding() 函数模板 创建 get_linked_binding_fn 函数</span>
+  Local<span class="token operator">&lt;</span>Function<span class="token operator">&gt;</span> get_linked_binding_fn <span class="token operator">=</span>
+      env<span class="token operator">-&gt;</span><span class="token function">NewFunctionTemplate</span><span class="token punctuation">(</span>GetLinkedBinding<span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">GetFunction</span><span class="token punctuation">(</span>env<span class="token operator">-&gt;</span><span class="token function">context</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">.</span><span class="token function">ToLocalChecked</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 基于 GetInternalBinding() 函数模板 创建 get_internal_binding_fn 函数</span>
+  Local<span class="token operator">&lt;</span>Function<span class="token operator">&gt;</span> get_internal_binding_fn <span class="token operator">=</span>
+      env<span class="token operator">-&gt;</span><span class="token function">NewFunctionTemplate</span><span class="token punctuation">(</span>GetInternalBinding<span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">GetFunction</span><span class="token punctuation">(</span>env<span class="token operator">-&gt;</span><span class="token function">context</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">.</span><span class="token function">ToLocalChecked</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 上面三个函数会作为 调用 loaders_bootstrapper() 时的参数。</span>
+  Local<span class="token operator">&lt;</span>Value<span class="token operator">&gt;</span> loaders_bootstrapper_args<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+    env<span class="token operator">-&gt;</span><span class="token function">process_object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    get_binding_fn<span class="token punctuation">,</span>
+    get_linked_binding_fn<span class="token punctuation">,</span>
+    get_internal_binding_fn<span class="token punctuation">,</span>
+    <span class="token class-name">Boolean</span><span class="token operator">::</span><span class="token function">New</span><span class="token punctuation">(</span>env<span class="token operator">-&gt;</span><span class="token function">isolate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                 env<span class="token operator">-&gt;</span><span class="token function">options</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-&gt;</span>debug_options<span class="token operator">-&gt;</span>break_node_first_line<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// loaders_bootstrapper() 调用结果将保存在这个变量，</span>
+  <span class="token comment">// 接下来，它将被作为参数传给另一个启动函数：node_bootstrapper()</span>
+  Local<span class="token operator">&lt;</span>Value<span class="token operator">&gt;</span> bootstrapped_loaders<span class="token punctuation">;</span>
+
+  <span class="token comment">// 调用启动函数 loaders_bootstrapper()</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">ExecuteBootstrapper</span><span class="token punctuation">(</span>env<span class="token punctuation">,</span> loaders_bootstrapper<span class="token punctuation">.</span><span class="token function">ToLocalChecked</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                           <span class="token function">arraysize</span><span class="token punctuation">(</span>loaders_bootstrapper_args<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                           loaders_bootstrapper_args<span class="token punctuation">,</span>
+                           <span class="token operator">&amp;</span>bootstrapped_loaders<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// Bootstrap Node.js</span>
+  Local<span class="token operator">&lt;</span>Object<span class="token operator">&gt;</span> bootstrapper <span class="token operator">=</span> <span class="token class-name">Object</span><span class="token operator">::</span><span class="token function">New</span><span class="token punctuation">(</span>env<span class="token operator">-&gt;</span><span class="token function">isolate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">SetupBootstrapObject</span><span class="token punctuation">(</span>env<span class="token punctuation">,</span> bootstrapper<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  Local<span class="token operator">&lt;</span>Value<span class="token operator">&gt;</span> bootstrapped_node<span class="token punctuation">;</span>
+  Local<span class="token operator">&lt;</span>Value<span class="token operator">&gt;</span> node_bootstrapper_args<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+    env<span class="token operator">-&gt;</span><span class="token function">process_object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    bootstrapper<span class="token punctuation">,</span>
+    bootstrapped_loaders
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token comment">// 调用启动函数 loaders_bootstrapper()</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">ExecuteBootstrapper</span><span class="token punctuation">(</span>env<span class="token punctuation">,</span> node_bootstrapper<span class="token punctuation">.</span><span class="token function">ToLocalChecked</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                           <span class="token function">arraysize</span><span class="token punctuation">(</span>node_bootstrapper_args<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                           node_bootstrapper_args<span class="token punctuation">,</span>
+                           <span class="token operator">&amp;</span>bootstrapped_node<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br></div></div><h3 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h3> <p><code>LoadEnvironment()</code> 主要是调用了两个 <code>启动函数(Bootstrapper)</code></p> <ul><li>loaders_bootstrapper()</li> <li>node_bootstrapper()</li></ul> <p>其中 loaders_bootstrapper() 主要实现了一个简单的模块加载机制名为 <code>NativeModule</code>，主要用于加载内部模块的，会在 node_bootstrapper() 中用到；</p> <p>而在 node_bootstrapper() 则加载并执行了用户的 js 文件（也就是通常的 app.js 或 index.js)。</p> <p>这两个启动函数分别定义在 <code>/lib/internal/bootstrap/loaders.js</code> 和 <code>/lib/internal/bootstrap/node.js</code> 文件中；</p> <p>接下来的两篇文，会分别对这两个文件进行详细的探究，弄清楚 js 文件加载执行的细节；</p></div></div> <footer class="page-edit" data-v-7dd611ab><!----> <!----></footer> <div class="page-nav" data-v-7dd611ab><p class="inner"><span class="prev">
+      ←
+      <a href="/nodejs-src/register-builtin-modules.html" class="prev">
+        Node.js 原生模块(C++模块)的注册
+      </a></span> <!----></p></div> </main></div></div> <div class="sidebar-mask" data-v-0c77f194></div> <aside class="sidebar" data-v-0c77f194><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/categories/" class="nav-link">
+  博客
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/nodejs-src/" aria-current="page" class="sidebar-link">Node.js 源码分析 - 目录 &amp; 前言</a></li><li><a href="/nodejs-src/the-main.html" class="sidebar-link">Node.js 源码分析 - 从 main 函数开始</a></li><li><a href="/nodejs-src/register-builtin-modules.html" class="sidebar-link">Node.js 原生模块(C++模块)的注册</a></li><li><a href="/nodejs-src/bootstrap-js.html" aria-current="page" class="active sidebar-link">Node.js 源码分析 - 加载 js 文件</a><ul class="sidebar-sub-headers"></ul></li></ul> </aside> <div class="footer-wrap py-20 bg-gray-500" data-v-717d1cf8 data-v-0c77f194><div class="w-full text-center text-white" data-v-717d1cf8>
+    合肥灼灼信息技术有限公司
+  </div> <div class="w-full text-center text-white mt-2" data-v-717d1cf8>
+    Copyright © 2020-present zhuo-zhuo.com
+  </div> <div class="w-full text-center  mt-2" data-v-717d1cf8><a href="https://beian.miit.gov.cn/" target="blank" class="text-gray-300 text-sm" data-v-717d1cf8>皖ICP备20009670号-2</a></div></div></div></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.0ba7f43e.js" defer></script><script src="/assets/js/8.8fe45a55.js" defer></script><script src="/assets/js/1.2d515849.js" defer></script><script src="/assets/js/28.77e7e8f0.js" defer></script>
+  </body>
+</html>

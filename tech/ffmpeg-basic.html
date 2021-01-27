@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>FFMPEG - 基础命令 | 灼灼前端</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    
+    <meta name="description" content="移动端App开发网页:Flutter 原生跨端开发、Flutter 集成 Android & iOS 混合开发，丝滑高帧的用户体验。小程序开发:JS/TS、Vue、React、Uni-app 多端开发，小游戏、Three.js 3D、车联网地图应用。三方技术顾问:项目报价、合同、风险，项目管理、跟进与协调、验收；系统运维、压力测试。">
+    <meta name="baidu-site-verification" content="code-GLMGFYoFh6">
+    
+    <link rel="preload" href="/assets/css/0.styles.7659f3c6.css" as="style"><link rel="preload" href="/assets/js/app.0ba7f43e.js" as="script"><link rel="preload" href="/assets/js/8.8fe45a55.js" as="script"><link rel="preload" href="/assets/js/1.2d515849.js" as="script"><link rel="preload" href="/assets/js/37.3aa121fc.js" as="script"><link rel="prefetch" href="/assets/js/10.70ee330d.js"><link rel="prefetch" href="/assets/js/11.9a517545.js"><link rel="prefetch" href="/assets/js/12.b3d78d9c.js"><link rel="prefetch" href="/assets/js/13.19acdff0.js"><link rel="prefetch" href="/assets/js/14.39ceab07.js"><link rel="prefetch" href="/assets/js/15.af69e1fe.js"><link rel="prefetch" href="/assets/js/16.d20572e3.js"><link rel="prefetch" href="/assets/js/17.1e25eef3.js"><link rel="prefetch" href="/assets/js/18.5c1cd5e9.js"><link rel="prefetch" href="/assets/js/19.fa6002d0.js"><link rel="prefetch" href="/assets/js/20.f9b868f4.js"><link rel="prefetch" href="/assets/js/21.fc723abd.js"><link rel="prefetch" href="/assets/js/22.e721e36b.js"><link rel="prefetch" href="/assets/js/23.70157ced.js"><link rel="prefetch" href="/assets/js/24.bb0911e9.js"><link rel="prefetch" href="/assets/js/25.a6430ad1.js"><link rel="prefetch" href="/assets/js/26.83e2cc3e.js"><link rel="prefetch" href="/assets/js/27.6058922f.js"><link rel="prefetch" href="/assets/js/28.77e7e8f0.js"><link rel="prefetch" href="/assets/js/29.b7c2dcc4.js"><link rel="prefetch" href="/assets/js/3.5eef70fb.js"><link rel="prefetch" href="/assets/js/30.1b0ecbdc.js"><link rel="prefetch" href="/assets/js/31.19b7e0c5.js"><link rel="prefetch" href="/assets/js/32.6eee722d.js"><link rel="prefetch" href="/assets/js/33.58e00e54.js"><link rel="prefetch" href="/assets/js/34.746f015b.js"><link rel="prefetch" href="/assets/js/35.8f20e914.js"><link rel="prefetch" href="/assets/js/36.70533f68.js"><link rel="prefetch" href="/assets/js/38.cd127ab8.js"><link rel="prefetch" href="/assets/js/39.ca650a41.js"><link rel="prefetch" href="/assets/js/4.a8aeca64.js"><link rel="prefetch" href="/assets/js/40.0c650fd3.js"><link rel="prefetch" href="/assets/js/41.0ea1abd2.js"><link rel="prefetch" href="/assets/js/42.9ab2e744.js"><link rel="prefetch" href="/assets/js/43.75e6f56c.js"><link rel="prefetch" href="/assets/js/44.526194c2.js"><link rel="prefetch" href="/assets/js/5.9ccab7e1.js"><link rel="prefetch" href="/assets/js/6.fe151a09.js"><link rel="prefetch" href="/assets/js/7.4294dc96.js"><link rel="prefetch" href="/assets/js/9.a08196e9.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.7659f3c6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div data-v-623b3d5a><div class="theme-container no-sidebar" data-v-0c77f194 data-v-623b3d5a><header class="navbar" data-v-0c77f194><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/logo.png" alt="灼灼前端" class="logo"> <span class="site-name can-hide">灼灼前端</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/categories/" class="nav-link">
+  博客
+</a></div> <!----></nav></div></header> <div class="main-layout" data-v-0c77f194 data-v-623b3d5a><div class="left-part" data-v-0c77f194 data-v-623b3d5a></div> <div class="right-part" data-v-0c77f194 data-v-623b3d5a><main class="container px-2 md:px-10 lg:pl-20 mx-auto " data-v-7dd611ab data-v-623b3d5a> <div class="text-center pt-4" data-v-7dd611ab><div class="text-2xl md:text-3xl font-light " data-v-7dd611ab>FFMPEG - 基础命令</div> <div class="flex justify-center text-sm text-gray-400 flex-wrap mt-6" data-v-7dd611ab><div data-v-7dd611ab>
+        分类于
+        <span class="pr-2" data-v-7dd611ab><a href="/categories/ffmpeg/" class="underline" data-v-7dd611ab>ffmpeg</a></span></div> <div class="ml-2" data-v-7dd611ab>
+        发表于
+        <span class="text-gray-600 border-b border-dashed border-gray-400 cursor-not-allowed" data-v-7dd611ab>2019-11-24</span></div> <div class="ml-2" data-v-7dd611ab>
+        作者:
+        <span class="text-gray-600 border-b border-dashed border-gray-400 cursor-not-allowed" data-v-7dd611ab>灼灼团队</span></div> <div class="ml-3" data-v-7dd611ab>
+        本文字数:
+        <span class="text-gray-500" data-v-7dd611ab>
+          1622
+        </span></div> <div class="ml-3" data-v-7dd611ab>
+        阅读时长 ≈
+        <span data-v-7dd611ab> 5.4 分钟 </span></div></div></div> <div class="mt-10" data-v-7dd611ab><div class="content content__default" data-v-7dd611ab><h3 id="mac-安装"><a href="#mac-安装" class="header-anchor">#</a> Mac 安装</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>brew <span class="token function">install</span> ffmpeg
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="查看-mac-上的设备列表"><a href="#查看-mac-上的设备列表" class="header-anchor">#</a> 查看 mac 上的设备列表</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>ffmpeg -f avfoundation -list_devices <span class="token boolean">true</span> -i <span class="token string">&quot;&quot;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div> <h3 id="屏幕录像"><a href="#屏幕录像" class="header-anchor">#</a> 屏幕录像</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># 录屏</span>
+ffmpeg -f avfoundation -i <span class="token number">1</span> -r <span class="token number">30</span> -pix_fmt yuv420p out.mp4
+
+<span class="token comment"># 录屏+录音</span>
+ffmpeg -f avfoundation -i <span class="token number">1</span>:0 -r <span class="token number">30</span> -pix_fmt yuv420p -c:v libx264 -crf <span class="token number">0</span> -c:a aac -b:a 192k out.mp4
+
+<span class="token comment"># 录屏+录音(指定输出分辨率)</span>
+ffmpeg -f avfoundation -i <span class="token number">1</span>:0 -r <span class="token number">30</span> -s 1024x720 -pix_fmt yuv420p -c:v libx264 -c:a aac -b:a 192k out.mp4
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><p>其中, <code>-r</code> 指的是帧率(fps)， <code>-crf 0</code> 指的是无损压缩。</p> <p><code>-i 1:1</code> 前面的1是指视频设备索引，后面的0是指麦克风设备索引，这个值根据上面查看设备列表指令返回的结果而定。</p> <p>如果报类似的错 <code>Too many packets buffered for output stream 0:0</code>，则加上参数 <code>-max_muxing_queue_size 2048</code> 如下：</p> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>ffmpeg -f avfoundation -i <span class="token number">1</span>:0 -max_muxing_queue_size <span class="token number">2048</span> -r <span class="token number">30</span> -pix_fmt yuv420p -c:v libx264 -s 1920x1080 -b:a 32k out.mp4
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="摄像头录制"><a href="#摄像头录制" class="header-anchor">#</a> 摄像头录制</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># 录视频</span>
+ffmpeg -framerate <span class="token number">30</span> -f avfoundation -i <span class="token number">0</span> -pix_fmt yuv420p out.mp4
+
+<span class="token comment"># 视频 + 音频</span>
+ffmpeg -framerate <span class="token number">30</span> -f avfoundation -i <span class="token number">0</span>:0 -pix_fmt yuv420p out.mp4
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="录音"><a href="#录音" class="header-anchor">#</a> 录音</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>ffmpeg -f avfoundation -i :0 out.wav
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="录制画中画"><a href="#录制画中画" class="header-anchor">#</a> 录制画中画</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>ffmpeg -f avfoundation -i <span class="token string">&quot;1&quot;</span> -framerate <span class="token number">30</span> -f avfoundation -i <span class="token string">&quot;0:0&quot;</span> -r <span class="token number">30</span> -c:v libx264 -preset ultrafast -filter_complex <span class="token string">&quot;[1:v]scale=w=300:h=300:force_original_aspect_ratio=decrease[a];[0:v][a]overlay=x=W-w-10:y=H-h-30[out]&quot;</span> -map <span class="token string">&quot;[out]&quot;</span> -movflags faststart -map <span class="token number">1</span>:a -pix_fmt yuv420p -s 1024x720 output.mp4
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="rtmp拉流"><a href="#rtmp拉流" class="header-anchor">#</a> RTMP拉流</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># url 要加引号，不然会出错</span>
+
+<span class="token comment"># 播放</span>
+ffplay -i <span class="token string">&quot;rtmp://223.240.118.251:10085/hls/Seven23?sign=BklPCT0Wg&quot;</span>
+
+<span class="token comment"># 查看视频信息</span>
+ffprobe -i <span class="token string">&quot;rtmp://223.240.118.251:10085/hls/Seven23?sign=BklPCT0Wg&quot;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="视频批量切割"><a href="#视频批量切割" class="header-anchor">#</a> 视频批量切割</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code>ffmpeg -fflags +genpts -i input.mov -acodec copy -vcodec copy -f segment -segment_time <span class="token number">30</span> -reset_timestamps <span class="token number">1</span> -map <span class="token number">0</span>:0 -map <span class="token number">0</span>:1 piece_%03d.mov
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="视频合并"><a href="#视频合并" class="header-anchor">#</a> 视频合并</h3> <div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># index.txt</span>
+<span class="token function">file</span> <span class="token string">'out_000.mp4'</span>
+<span class="token function">file</span> <span class="token string">'out_001.mp4'</span>
+<span class="token function">file</span> <span class="token string">'out_002.mp4'</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><div class="language-sh line-numbers-mode"><pre class="language-sh"><code><span class="token comment"># 合并</span>
+ffmpeg -f concat -i index.txt -c copy output.mp4
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="参考"><a href="#参考" class="header-anchor">#</a> 参考</h3> <div class="language- extra-class"><pre><code>- [ffmpeg视频切片转码合并](https://www.dazhuanlan.com/2019/12/04/5de7ce6d6ffdd/)
+- [ffmpeg转码](https://blog.csdn.net/hk_shao/article/details/86688756)
+- [FFmpeg命令实例合集](https://blog.csdn.net/yu540135101/article/details/103025957)
+- [ffmpeg实例，split，pad，crop，scale，hflip，overlay](https://blog.csdn.net/yu540135101/article/details/84332055)</code></pre></div></div></div> <footer class="page-edit" data-v-7dd611ab><!----> <!----></footer> <!----> </main></div></div> <div class="sidebar-mask" data-v-0c77f194></div> <aside class="sidebar" data-v-0c77f194><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/categories/" class="nav-link">
+  博客
+</a></div> <!----></nav>  <!----> </aside> <div class="footer-wrap py-20 bg-gray-500" data-v-717d1cf8 data-v-0c77f194><div class="w-full text-center text-white" data-v-717d1cf8>
+    合肥灼灼信息技术有限公司
+  </div> <div class="w-full text-center text-white mt-2" data-v-717d1cf8>
+    Copyright © 2020-present zhuo-zhuo.com
+  </div> <div class="w-full text-center  mt-2" data-v-717d1cf8><a href="https://beian.miit.gov.cn/" target="blank" class="text-gray-300 text-sm" data-v-717d1cf8>皖ICP备20009670号-2</a></div></div></div></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.0ba7f43e.js" defer></script><script src="/assets/js/8.8fe45a55.js" defer></script><script src="/assets/js/1.2d515849.js" defer></script><script src="/assets/js/37.3aa121fc.js" defer></script>
+  </body>
+</html>
